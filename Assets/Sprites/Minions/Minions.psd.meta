@@ -1,0 +1,573 @@
+fileFormatVersion: 2
+guid: d47f68588d7d9c640915e9cb8670daf3
+timeCreated: 1454758388
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Fury_Arms
+    21300002: Fury_Body
+    21300004: Fury_Food_1
+    21300006: Fury_Food_2
+    21300008: Furios_Arms
+    21300010: Farios_Head
+    21300012: Furios_Body
+    21300014: Furios_Food_1
+    21300016: Furios_Food_2
+    21300018: Furoon_Arms
+    21300020: Furoon_Head
+    21300022: Furoon_Body
+    21300024: Furoon_Food_1
+    21300026: Minions_Food_2
+    21300028: Furygantos_Head
+    21300030: Furygantos_Arms
+    21300032: Furygantos_Body
+    21300034: Furygantos_Food_1
+    21300036: Furygantos_Food_2
+    21300038: Feury_Ball
+    21300040: Fury_Explosion
+    21300042: Feury_Ball_Fire1
+    21300044: Feury_Ball_Fire2
+    21300046: Feury_Ball_Fire3
+    21300048: Feury_Ball_Fire4
+    21300050: Feury
+    21300052: Feuros_Body
+    21300054: Feuros_Arm_Left
+    21300056: Feuros_Arm_Right
+    21300058: Feury_Small1
+    21300060: Feury_Small2
+    21300062: Feury_Small3
+    21300064: Feuros_Small_1
+    21300066: Feuros_Small_2
+    21300068: Feuros_small_3
+    21300070: Feuros_small_4
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 64
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Fury_Arms
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 528
+        width: 23
+        height: 3
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Fury_Body
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 499
+        width: 17
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Fury_Food_1
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 496
+        width: 4
+        height: 2
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Fury_Food_2
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 497
+        width: 4
+        height: 1
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Furios_Arms
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 543
+        width: 34
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Farios_Head
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 516
+        width: 24
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Furios_Body
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 500
+        width: 24
+        height: 15
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Furios_Food_1
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 496
+        width: 5
+        height: 3
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Furios_Food_2
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 498
+        width: 5
+        height: 1
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Furoon_Arms
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 464
+        width: 50
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Furoon_Head
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 431
+        width: 28
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Furoon_Body
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 408
+        width: 28
+        height: 22
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Furoon_Food_1
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 400
+        width: 6
+        height: 7
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Minions_Food_2
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 405
+        width: 6
+        height: 2
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Furygantos_Head
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 450
+        width: 56
+        height: 56
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -28, y: 28}
+        - {x: -28, y: -28}
+        - {x: 26, y: -28}
+        - {x: 28, y: -25}
+        - {x: 28, y: 28}
+    - name: Furygantos_Arms
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 528
+        width: 100
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Furygantos_Body
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 408
+        width: 56
+        height: 41
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -28, y: 41}
+        - {x: -28, y: 0}
+        - {x: 28, y: 0}
+        - {x: 28, y: 41}
+    - name: Furygantos_Food_1
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 400
+        width: 22
+        height: 7
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Furygantos_Food_2
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 405
+        width: 22
+        height: 2
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Feury_Ball
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 258
+        width: 36
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -15, y: 18}
+        - {x: -18, y: 17}
+        - {x: -18, y: -15}
+        - {x: -17, y: -18}
+        - {x: 14, y: -18}
+        - {x: 18, y: -13}
+        - {x: 18, y: 14}
+        - {x: 13, y: 18}
+    - name: Fury_Explosion
+      rect:
+        serializedVersion: 2
+        x: 382
+        y: 225
+        width: 76
+        height: 81
+      alignment: 9
+      pivot: {x: 0.4980573, y: 0.4653663}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 13.147644, y: 43.30533}
+        - {x: -21.852356, y: 43.30533}
+        - {x: -33.852356, y: 26.305328}
+        - {x: -33.852356, y: -19.694672}
+        - {x: -23.852356, y: -37.69467}
+        - {x: 36.147644, y: -37.69467}
+        - {x: 37.147644, y: -31.694672}
+        - {x: 37.147644, y: 14.305328}
+        - {x: 30.147644, y: 33.30533}
+      - - {x: -29.852356, y: -28.694672}
+        - {x: -21.852356, y: -28.694672}
+        - {x: -21.852356, y: -19.694672}
+        - {x: -29.852356, y: -19.694672}
+      - - {x: 33.147644, y: -10.694672}
+        - {x: 31.147644, y: -12.694672}
+        - {x: 31.147644, y: -16.694672}
+        - {x: 33.147644, y: -18.694672}
+        - {x: 36.147644, y: -18.694672}
+        - {x: 38.147644, y: -16.694672}
+        - {x: 38.147644, y: -12.694672}
+        - {x: 36.147644, y: -10.694672}
+      - - {x: -36.852356, y: -2.6946716}
+        - {x: -37.852356, y: -3.6946716}
+        - {x: -37.852356, y: -7.6946716}
+        - {x: -36.852356, y: -8.694672}
+        - {x: -32.852356, y: -8.694672}
+        - {x: -30.852356, y: -6.6946716}
+        - {x: -30.852356, y: -4.6946716}
+        - {x: -32.852356, y: -2.6946716}
+      - - {x: 24.147644, y: 21.305328}
+        - {x: 24.147644, y: 12.305328}
+        - {x: 33.147644, y: 12.305328}
+        - {x: 33.147644, y: 21.305328}
+      - - {x: 35.147644, y: 22.305328}
+        - {x: 33.147644, y: 20.305328}
+        - {x: 33.147644, y: 17.305328}
+        - {x: 35.147644, y: 15.305328}
+        - {x: 37.147644, y: 15.305328}
+        - {x: 38.147644, y: 16.305328}
+        - {x: 38.147644, y: 21.305328}
+        - {x: 37.147644, y: 22.305328}
+      - - {x: -20.852356, y: 35.30533}
+        - {x: -22.852356, y: 33.30533}
+        - {x: -22.852356, y: 30.305328}
+        - {x: -20.852356, y: 28.305328}
+        - {x: -17.852356, y: 28.305328}
+        - {x: -15.852356, y: 30.305328}
+        - {x: -15.852356, y: 33.30533}
+        - {x: -17.852356, y: 35.30533}
+      - - {x: 16.147644, y: 38.30533}
+        - {x: 14.147644, y: 36.30533}
+        - {x: 14.147644, y: 33.30533}
+        - {x: 16.147644, y: 31.305328}
+        - {x: 19.147644, y: 31.305328}
+        - {x: 21.147644, y: 33.30533}
+        - {x: 21.147644, y: 36.30533}
+        - {x: 19.147644, y: 38.30533}
+    - name: Feury_Ball_Fire1
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 217
+        width: 6
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Feury_Ball_Fire2
+      rect:
+        serializedVersion: 2
+        x: 328
+        y: 230
+        width: 4
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Feury_Ball_Fire3
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 227
+        width: 6
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Feury_Ball_Fire4
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 216
+        width: 6
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Feury
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 240
+        width: 26
+        height: 39
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Feuros_Body
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 240
+        width: 41
+        height: 51
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -4.5, y: 51}
+        - {x: -17.5, y: 45}
+        - {x: -20.5, y: 37}
+        - {x: -20.5, y: 5}
+        - {x: -19.5, y: 1}
+        - {x: -16.5, y: 0}
+        - {x: 17.5, y: 0}
+        - {x: 20.5, y: 2}
+        - {x: 20.5, y: 42}
+        - {x: 9.5, y: 51}
+    - name: Feuros_Arm_Left
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 295
+        width: 9
+        height: 15
+      alignment: 5
+      pivot: {x: 1, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Feuros_Arm_Right
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 293
+        width: 12
+        height: 19
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Feury_Small1
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 241
+        width: 2
+        height: 3
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Feury_Small2
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 241
+        width: 2
+        height: 5
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Feury_Small3
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 242
+        width: 3
+        height: 6
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Feuros_Small_1
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 242
+        width: 3
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Feuros_Small_2
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 242
+        width: 4
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Feuros_small_3
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 242
+        width: 7
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Feuros_small_4
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 242
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
