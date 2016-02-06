@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: d47f68588d7d9c640915e9cb8670daf3
-timeCreated: 1454263549
+timeCreated: 1454758388
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -36,6 +36,10 @@ TextureImporter:
     21300058: Feury_Small1
     21300060: Feury_Small2
     21300062: Feury_Small3
+    21300064: Feuros_Small_1
+    21300066: Feuros_Small_2
+    21300068: Feuros_small_3
+    21300070: Feuros_small_4
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -249,7 +253,8 @@ TextureImporter:
       outline:
       - - {x: -28, y: 28}
         - {x: -28, y: -28}
-        - {x: 28, y: -28}
+        - {x: 26, y: -28}
+        - {x: 28, y: -25}
         - {x: 28, y: 28}
     - name: Furygantos_Arms
       rect:
@@ -310,12 +315,14 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -18, y: 18}
-        - {x: -18, y: -18}
-        - {x: 15, y: -18}
-        - {x: 18, y: -16}
-        - {x: 18, y: 15}
-        - {x: 17, y: 18}
+      - - {x: -15, y: 18}
+        - {x: -18, y: 17}
+        - {x: -18, y: -15}
+        - {x: -17, y: -18}
+        - {x: 14, y: -18}
+        - {x: 18, y: -13}
+        - {x: 18, y: 14}
+        - {x: 13, y: 18}
     - name: Fury_Explosion
       rect:
         serializedVersion: 2
@@ -327,19 +334,19 @@ TextureImporter:
       pivot: {x: 0.4980573, y: 0.4653663}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -33.852356, y: -25.694672}
-        - {x: -14.852356, y: -37.69467}
-        - {x: 25.147644, y: -37.69467}
-        - {x: 37.147644, y: -33.69467}
-        - {x: 37.147644, y: 8.305328}
-        - {x: 25.147644, y: 40.30533}
-        - {x: 14.147644, y: 43.30533}
-        - {x: -15.852356, y: 43.30533}
-        - {x: -33.852356, y: 30.305328}
-      - - {x: -29.852356, y: -19.694672}
-        - {x: -29.852356, y: -28.694672}
+      - - {x: 13.147644, y: 43.30533}
+        - {x: -21.852356, y: 43.30533}
+        - {x: -33.852356, y: 26.305328}
+        - {x: -33.852356, y: -19.694672}
+        - {x: -23.852356, y: -37.69467}
+        - {x: 36.147644, y: -37.69467}
+        - {x: 37.147644, y: -31.694672}
+        - {x: 37.147644, y: 14.305328}
+        - {x: 30.147644, y: 33.30533}
+      - - {x: -29.852356, y: -28.694672}
         - {x: -21.852356, y: -28.694672}
         - {x: -21.852356, y: -19.694672}
+        - {x: -29.852356, y: -19.694672}
       - - {x: 33.147644, y: -10.694672}
         - {x: 31.147644, y: -12.694672}
         - {x: 31.147644, y: -16.694672}
@@ -450,13 +457,16 @@ TextureImporter:
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -7.5, y: 51}
-        - {x: -20.5, y: 44}
-        - {x: -20.5, y: 0}
+      - - {x: -4.5, y: 51}
+        - {x: -17.5, y: 45}
+        - {x: -20.5, y: 37}
+        - {x: -20.5, y: 5}
+        - {x: -19.5, y: 1}
+        - {x: -16.5, y: 0}
         - {x: 17.5, y: 0}
         - {x: 20.5, y: 2}
-        - {x: 20.5, y: 43}
-        - {x: 12.5, y: 51}
+        - {x: 20.5, y: 42}
+        - {x: 9.5, y: 51}
     - name: Feuros_Arm_Left
       rect:
         serializedVersion: 2
@@ -510,6 +520,50 @@ TextureImporter:
         height: 6
       alignment: 6
       pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Feuros_Small_1
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 242
+        width: 3
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Feuros_Small_2
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 242
+        width: 4
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Feuros_small_3
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 242
+        width: 7
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Feuros_small_4
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 242
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     outline: []
