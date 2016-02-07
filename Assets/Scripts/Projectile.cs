@@ -147,7 +147,7 @@ public class Projectile : MonoBehaviour
 		if (target == null)
 			return;
 
-		target.Damage(Damage, Owner);
+		Owner.DoDamageToTarget(target);
 
 		Vector2 force = (target.Position - rigid.position);
 		force *= (ExplosionRange - force.magnitude); //Reverse force magnitude (closer = bigger force)

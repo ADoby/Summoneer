@@ -23,6 +23,16 @@ public class Minion : Attacker
 		}
 	}
 
+	public MinionLevelInfo LastLevelInfo
+	{
+		get
+		{
+			if (Level == 0)
+				return null;
+			return LevelInfos[Level - 1];
+		}
+	}
+
 	public override float BaseHealth
 	{
 		get
@@ -113,7 +123,7 @@ public class Minion : Attacker
 		}
 	}
 
-	public float Power
+	public override float Power
 	{
 		get
 		{
@@ -230,7 +240,7 @@ public class Minion : Attacker
 	private const float MinSpeed = 0f;
 	private const float SpeedMult = 5000f;
 
-	public float MaxSpeedDistance = 200f;
+	public float MaxSpeedDistance = 5f;
 
 	public Timer CheckNearFieldTimer = new Timer() { Time1 = 0.5f };
 	public LayerMask SightMask;
@@ -247,11 +257,7 @@ public class Minion : Attacker
 	[ReadOnly]
 	public float ProcentageSpeed;
 
-	[SerializeField]
-	[ReadOnly]
-	private float experience = 0f;
-
-	public float Experience
+	public override float Experience
 	{
 		get
 		{
@@ -390,12 +396,18 @@ public class Minion : Attacker
 
 		DoingLevelUp = true;
 		if (Animator != null) Animator.SetTrigger("LevelUp");
+		SetLevel(Level + 1);
+		if (Animator != null) Animator.SetTrigger("Spawn");
 	}
 
 	public virtual void DoLevelUp()
 	{
 		DoingLevelUp = false;
-		SetLevel(Level + 1);
+		if (LastLevelInfo != null)
+			LastLevelInfo.Hide();
+
+		//Update Experience
+		Experience = Experience;
 	}
 
 	private void SetLevel(int level)
@@ -403,12 +415,8 @@ public class Minion : Attacker
 		if (level < 0 || level >= LevelInfos.Count)
 			return;
 
-		CurrentLevelInfo.Hide();
 		Level = level;
 		CurrentLevelInfo.Show();
-
-		//Update Experience
-		Experience = Experience;
 	}
 
 	public void ShowCurrentLevel()
@@ -625,6 +633,7 @@ public class Minion : Attacker
 
 	public virtual void TriggerDoAction()
 	{
+		Debug.Log("Finished Attack");
 		DoAction();
 		ResetAction();
 	}
@@ -646,35 +655,11 @@ public class Minion : Attacker
 		//Default Attack only Attacks one target
 		for (int i = 0; i < EnemiesNear.Count; i++)
 		{
-			if (CanAttack(EnemiesNear[i]))
+			if (DoDamageToTarget(EnemiesNear[i]))
 			{
-				float damageDone = EnemiesNear[i].Damage(Power, this);
-				Experience += GameManager.Instance.CalculateDamageDoneExp(damageDone, RelativeStrength, EnemiesNear[i].RelativeStrength);
-				if (EnemiesNear[i].IsDead)
-				{
-					Experience += GameManager.Instance.CalculateEnemyKilledExp(RelativeStrength, EnemiesNear[i].RelativeStrength);
-				}
 				return;
 			}
 		}
-	}
-
-	protected virtual bool CanAttack(Attackable other)
-	{
-		if (ShouldAttack(other) == false)
-			return false;
-		return GameManager.Instance.CanAttack(this, other);
-	}
-
-	protected virtual bool ShouldAttack(Attackable other)
-	{
-		if (other == null)
-			return false;
-		if (other.Health == 0)
-			return false;
-		if (other.Owner != null && other.Owner == Owner)
-			return false;
-		return true;
 	}
 
 	public void DoDespawn()

@@ -87,12 +87,7 @@ public class Player : Owner
 	{
 		if (button.Type == SkillButton.Types.SUMMONMINION)
 		{
-			if (Souls > 0)
-			{
-				Minion minion = MinionManager.SpawnMinion(MinionCenter, button.Index);
-				RecruitMinion(minion, true);
-				Souls--;
-			}
+			SpawnMinion(button.Index);
 		}
 	}
 }

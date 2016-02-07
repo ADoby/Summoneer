@@ -11,6 +11,8 @@ public class KI_Owner : Owner
 	public Timer UpdateRecruitableMinions = new Timer(2f);
 	public Timer IdleTimer = new Timer(2f, 10f);
 
+	public bool CanRecruitMinions = false;
+
 	public float KISightRange = 10f;
 
 	public int MaxRecruitableMinionsChecked = 20;
@@ -33,6 +35,15 @@ public class KI_Owner : Owner
 
 	public States State = States.IDLE;
 
+	public float TargetStrengthDifference(Attackable other)
+	{
+		if (other == null)
+			return 0f;
+		if (other.Owner == null)
+			return RelativeStrength - other.RelativeStrength;
+		return RelativeStrength - other.Owner.RelativeStrength;
+	}
+
 	protected override void Start()
 	{
 		base.Start();
@@ -48,6 +59,101 @@ public class KI_Owner : Owner
 		}
 	}
 
+	protected virtual void UpdateAttacking()
+	{
+		if (Vector3.Distance(CurrentTargetPosition, MinionCenter) > ForgetDistance)
+		{
+			Target = null;
+			State = States.IDLE;
+			return;
+		}
+		CurrentTargetPosition = Target.transform.position;
+
+		if (Target.Health == 0f)
+		{
+			if (Target.Owner != null)
+			{
+				if (Target.Owner.Minions.Count > 0)
+				{
+					Target = Target.Owner.Minions[0];
+				}
+				else
+				{
+					Target = null;
+				}
+			}
+			else
+			{
+				Target = null;
+			}
+			if (Target == null)
+			{
+				State = States.IDLE;
+				IdleTimer.Reset();
+				return;
+			}
+			else
+			{
+				State = States.ATTACKING;
+			}
+		}
+
+		//If i am weaker or same strength run away
+		if (TargetStrengthDifference(Target) <= 0)
+		{
+			State = States.RUNNING;
+		}
+
+		Debug.DrawLine(MinionCenter, CurrentTargetPosition, Color.red);
+	}
+
+	protected virtual void UpdateRunning()
+	{
+		if (Target.Owner != null)
+		{
+			CurrentTargetPosition = MinionCenter - (Target.Owner.MinionCenter - CurrentTargetPosition).normalized * RunDistance;
+			Debug.DrawLine(MinionCenter, CurrentTargetPosition, Color.blue);
+
+			if (TargetStrengthDifference(Target) > 0)
+				State = States.ATTACKING;
+
+			if (Vector3.Distance(Target.Owner.CurrentTargetPosition, CurrentTargetPosition) > SaveDistance)
+			{
+				Target = null;
+				State = States.IDLE;
+			}
+		}
+		else
+		{
+			Target = null;
+		}
+	}
+
+	private int wantedNextMinion = -1;
+	public Timer SpawnMinionCooldown = new Timer(2f);
+
+	protected virtual void UpdateRecruiting()
+	{
+		if (wantedNextMinion < 0)
+		{
+			//Calculate next wanted minion
+			if (SpawnMinionCooldown.Update())
+			{
+				wantedNextMinion = 0;
+			}
+		}
+		else
+		{
+			//Wait until enough souls, then buy minion
+			if (Souls > 0)
+			{
+				SpawnMinion(wantedNextMinion);
+				SpawnMinionCooldown.Reset();
+				wantedNextMinion = -1;
+			}
+		}
+	}
+
 	protected override void Update()
 	{
 		if (State == States.IDLE)
@@ -59,62 +165,17 @@ public class KI_Owner : Owner
 		if (State == States.WALKING)
 			WantedSpeed = 0.3f;
 
+		UpdateRecruiting();
+
 		if (Target != null)
 		{
 			if (State == States.ATTACKING)
 			{
-				if (Vector3.Distance(CurrentTargetPosition, MinionCenter) > ForgetDistance)
-				{
-					Target = null;
-					return;
-				}
-				CurrentTargetPosition = Target.transform.position;
-
-				if (Target.Health == 0f)
-				{
-					if (Target.Owner != null)
-					{
-						if (Target.Owner.Minions.Count > 0)
-						{
-							Target = Target.Owner.Minions[0];
-						}
-						else
-						{
-							Target = null;
-						}
-					}
-					else
-					{
-						Target = null;
-					}
-					if (Target == null)
-					{
-						State = States.IDLE;
-						IdleTimer.Reset();
-					}
-					else
-					{
-						State = States.ATTACKING;
-					}
-				}
-				Debug.DrawLine(MinionCenter, CurrentTargetPosition, Color.red);
+				UpdateAttacking();
 			}
 			else if (State == States.RUNNING)
 			{
-				if (Target.Owner != null)
-				{
-					CurrentTargetPosition = MinionCenter - (Target.Owner.MinionCenter - CurrentTargetPosition).normalized * RunDistance;
-					Debug.DrawLine(MinionCenter, CurrentTargetPosition, Color.blue);
-
-					if (Vector3.Distance(Target.Owner.CurrentTargetPosition, CurrentTargetPosition) > SaveDistance)
-					{
-						Target = null;
-					}
-				}
-				else
-				{
-					Target = null;
-				}
+				UpdateRunning();
 			}
 		}
 		else
@@ -122,11 +183,11 @@ public class KI_Owner : Owner
 			FindRandomTargetPosition();
 			Debug.DrawLine(MinionCenter, CurrentTargetPosition);
 		}
-		base.Update();
 
+		base.Update();
 		transform.position = MinionCenter;
 
-		if (Type == Types.AGGRESSIVE)
+		if (Type == Types.AGGRESSIVE && CanRecruitMinions)
 		{
 			if (UpdateRecruitableMinions.UpdateAutoReset())
 			{
@@ -197,7 +258,7 @@ public class KI_Owner : Owner
 			return;
 		if (other.Owner != null)
 		{
-			if (other.Owner.RelativeStrength > RelativeStrength)
+			if (TargetStrengthDifference(other) <= 0)
 			{
 				//Run away
 				Target = other;
@@ -224,7 +285,7 @@ public class KI_Owner : Owner
 	public override void CanRecruit(Minion minion)
 	{
 		base.CanRecruit(minion);
-		if (Type == Types.AGGRESSIVE)
+		if (Type == Types.AGGRESSIVE && CanRecruitMinions)
 		{
 			TryRecruit(minion);
 		}

@@ -255,4 +255,14 @@ public class Owner : MonoBehaviour
 	{
 		CanNoLongerRecruit(minion);
 	}
+
+	protected virtual void SpawnMinion(int index)
+	{
+		if (Souls > 0)
+		{
+			Minion minion = MinionManager.SpawnMinion(MinionCenter, index);
+			RecruitMinion(minion, true);
+			Souls--;
+		}
+	}
 }

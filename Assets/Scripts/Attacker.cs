@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Attacker : Attackable
 {
+	[SerializeField]
+	[ReadOnly]
 	protected bool Attacking = false;
 
 	[SerializeField]
@@ -33,5 +35,65 @@ public class Attacker : Attackable
 		{
 			attackRangeY = value;
 		}
+	}
+
+	[SerializeField]
+	private float power = 5f;
+
+	public virtual float Power
+	{
+		get
+		{
+			return power;
+		}
+	}
+
+	[SerializeField]
+	[ReadOnly]
+	protected float experience = 5f;
+
+	public virtual float Experience
+	{
+		get
+		{
+			return experience;
+		}
+		set
+		{
+			experience = value;
+		}
+	}
+
+	public virtual bool DoDamageToTarget(Attackable target)
+	{
+		if (CanAttack(target))
+		{
+			float damageDone = target.Damage(Power, this);
+			Experience += GameManager.Instance.CalculateDamageDoneExp(damageDone, RelativeStrength, target.RelativeStrength);
+			if (target.IsDead)
+			{
+				Experience += GameManager.Instance.CalculateEnemyKilledExp(RelativeStrength, target.RelativeStrength);
+			}
+			return true;
+		}
+		return false;
+	}
+
+	protected virtual bool CanAttack(Attackable other)
+	{
+		if (ShouldAttack(other) == false)
+			return false;
+		return GameManager.Instance.CanAttack(this, other);
+	}
+
+	protected virtual bool ShouldAttack(Attackable other)
+	{
+		if (other == null)
+			return false;
+		if (other.Health == 0)
+			return false;
+		if (other.Owner != null && other.Owner == Owner)
+			return false;
+		return true;
 	}
 }
