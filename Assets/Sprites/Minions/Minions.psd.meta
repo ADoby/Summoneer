@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: d47f68588d7d9c640915e9cb8670daf3
-timeCreated: 1454779992
+timeCreated: 1454852864
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -43,6 +43,20 @@ TextureImporter:
     21300072: Feuroon_Body
     21300074: Arm_left
     21300076: Arm_right
+    21300078: Feurantos_head
+    21300080: Feurantos_HeadSprite_1
+    21300082: Feurantos_LeftArm
+    21300084: Feurantos_RightArm
+    21300086: Feurantos_Headsprite_2
+    21300088: Feurantos_Headsprite_3
+    21300090: Feurantos_Body_Middle
+    21300092: Feurantos_Body_Left
+    21300094: Feurantos_Body_Right
+    21300096: Feurantos_Body_Bottom
+    21300098: Feurantos_Sprite_1
+    21300100: Feurantos_Sprite_2
+    21300102: Feurantos_Sprite_3
+    21300104: Feurantos_Sprite_4
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -580,24 +594,20 @@ TextureImporter:
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 30, y: 57}
-        - {x: 27, y: 53}
-        - {x: 27, y: 47}
-        - {x: 28, y: 41}
-        - {x: 28, y: 39}
-        - {x: 29, y: 37}
-        - {x: 29, y: 32}
-        - {x: 28, y: 40}
-        - {x: 26, y: 50}
-        - {x: 25, y: 70}
-        - {x: 5, y: 91}
-        - {x: -29, y: 91}
-        - {x: -34, y: 78}
-        - {x: -34, y: 0}
-        - {x: 30, y: 0}
-        - {x: 34, y: 13}
-        - {x: 34, y: 56}
-        - {x: 31, y: 57}
+      - - {x: 20, y: 71}
+        - {x: 14, y: 59}
+        - {x: 12, y: 72}
+        - {x: 4, y: 91}
+        - {x: 1, y: 91}
+        - {x: 0, y: 90}
+        - {x: -28, y: 73}
+        - {x: -34, y: 45}
+        - {x: -34, y: 12}
+        - {x: -21, y: 0}
+        - {x: 21, y: 0}
+        - {x: 34, y: 4}
+        - {x: 34, y: 49}
+        - {x: 24, y: 68}
     - name: Arm_left
       rect:
         serializedVersion: 2
@@ -645,6 +655,193 @@ TextureImporter:
         - {x: 22, y: 0}
         - {x: 32, y: 10}
         - {x: 35, y: 29}
+    - name: Feurantos_head
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 121
+        width: 71
+        height: 95
+      alignment: 9
+      pivot: {x: 0.5438804, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 26.384491, y: 53}
+        - {x: 26.384491, y: 47}
+        - {x: 27.384491, y: 41}
+        - {x: 27.384491, y: 39}
+        - {x: 28.384491, y: 37}
+        - {x: 27.384491, y: 34}
+        - {x: 27.384491, y: 40}
+        - {x: 25.384491, y: 50}
+        - {x: 28.384491, y: 73}
+        - {x: 14.384491, y: 95}
+        - {x: -8.615509, y: 95}
+        - {x: -38.61551, y: 57}
+        - {x: -38.61551, y: 15}
+        - {x: -20.615509, y: 0}
+        - {x: 19.384491, y: 0}
+        - {x: 27.384491, y: 2}
+        - {x: 32.38449, y: 13}
+        - {x: 32.38449, y: 57}
+        - {x: 28.384491, y: 57}
+    - name: Feurantos_HeadSprite_1
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 147
+        width: 20
+        height: 43
+      alignment: 9
+      pivot: {x: 0.3909561, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Feurantos_LeftArm
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 9
+        width: 42
+        height: 102
+      alignment: 9
+      pivot: {x: 0.9302401, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -39.070084, y: 17}
+        - {x: -38.070084, y: 0}
+        - {x: 2.9299164, y: 0}
+        - {x: 2.9299164, y: 57}
+        - {x: -4.0700836, y: 102}
+        - {x: -35.070084, y: 102}
+        - {x: -39.070084, y: 96}
+    - name: Feurantos_RightArm
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 0
+        width: 54
+        height: 99
+      alignment: 9
+      pivot: {x: 0.07882591, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 29.7434, y: 99}
+        - {x: -4.2565994, y: 33}
+        - {x: -4.2565994, y: 7}
+        - {x: -2.2565994, y: 0}
+        - {x: 18.7434, y: 0}
+        - {x: 49.7434, y: 29}
+        - {x: 49.7434, y: 99}
+    - name: Feurantos_Headsprite_2
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 135
+        width: 11
+        height: 44
+      alignment: 9
+      pivot: {x: 0.7832281, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Feurantos_Headsprite_3
+      rect:
+        serializedVersion: 2
+        x: 237
+        y: 125
+        width: 7
+        height: 23
+      alignment: 9
+      pivot: {x: 0.09942845, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Feurantos_Body_Middle
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 42
+        width: 27
+        height: 65
+      alignment: 9
+      pivot: {x: 0.39614812, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Feurantos_Body_Left
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 46
+        width: 16
+        height: 38
+      alignment: 9
+      pivot: {x: 0.8894415, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Feurantos_Body_Right
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 47
+        width: 22
+        height: 23
+      alignment: 9
+      pivot: {x: 0.04683061, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Feurantos_Body_Bottom
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 6
+        width: 10
+        height: 33
+      alignment: 9
+      pivot: {x: 0.13221435, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Feurantos_Sprite_1
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 72
+        width: 11
+        height: 8
+      alignment: 9
+      pivot: {x: 0.018507523, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Feurantos_Sprite_2
+      rect:
+        serializedVersion: 2
+        x: 213
+        y: 27
+        width: 8
+        height: 11
+      alignment: 9
+      pivot: {x: 0.03266716, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Feurantos_Sprite_3
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 27
+        width: 8
+        height: 15
+      alignment: 9
+      pivot: {x: 0.8504963, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Feurantos_Sprite_4
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 73
+        width: 3
+        height: 9
+      alignment: 9
+      pivot: {x: 0.8115489, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     outline: []
   spritePackingTag: 
   userData: 
