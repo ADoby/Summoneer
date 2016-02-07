@@ -19,4 +19,14 @@ public class MinionTrigger : MonoBehaviour
 	{
 		Target.DoDespawn();
 	}
+
+	public void DoStartMovement()
+	{
+		Target.DoStartMovement();
+	}
+
+	public void DoStopMovement()
+	{
+		Target.DoStopMovement();
+	}
 }

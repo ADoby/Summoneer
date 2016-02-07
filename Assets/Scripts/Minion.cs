@@ -12,6 +12,7 @@ public class Minion : Attacker
 	public bool Recruitable = false;
 
 	public bool DoingLevelUp = false;
+	public bool AnimationCanMove = true;
 
 	#region LEVELINFO
 
@@ -417,6 +418,7 @@ public class Minion : Attacker
 
 		Level = level;
 		CurrentLevelInfo.Show();
+		AnimationCanMove = CurrentLevelInfo.AnimationCanMove;
 	}
 
 	public void ShowCurrentLevel()
@@ -442,6 +444,16 @@ public class Minion : Attacker
 		Experience = 0f;
 		if (ExperienceBar) ExperienceBar.Set(ExperienceProcentage, true);
 		Health = BaseHealth;
+	}
+
+	public void DoStartMovement()
+	{
+		AnimationCanMove = true;
+	}
+
+	public void DoStopMovement()
+	{
+		AnimationCanMove = false;
 	}
 
 	#region Initilization
@@ -499,25 +511,32 @@ public class Minion : Attacker
 
 	protected virtual void FixedUpdate()
 	{
-		if (Claimable || Owner == null)
+		if (Recruitable && Claimable)
 			return;
 		if (WasClaimable)
 			return;
 		walkDirection = (TargetPosition - transform.position).normalized;
 		CurrentDistance = Vector3.Distance(TargetPosition, transform.position);
-		ProcentageSpeed = Mathf.Clamp01(CurrentDistance / MaxSpeedDistance) * Owner.WantedSpeed;
+		ProcentageSpeed = Mathf.Clamp01(CurrentDistance / MaxSpeedDistance);
+		if (Owner != null)
+			ProcentageSpeed *= Owner.WantedSpeed;
 		walkDirection = walkDirection * ProcentageSpeed;
 
 		randomize.x = (Random.value * 2) - 1;
 		randomize.y = (Random.value * 2) - 1;
 		walkDirection += randomize * Randomness;
 
-		AddForce(walkDirection * Time.fixedDeltaTime * Speed);
+		if (AnimationCanMove)
+			AddForce(walkDirection * Time.fixedDeltaTime * Speed);
 		CurrentVelocity = Velocity;
-		CurrentVelocity = Vector2.ClampMagnitude(CurrentVelocity, MaxSpeed * Owner.WantedSpeed);
+		if (Owner != null)
+			CurrentVelocity = Vector2.ClampMagnitude(CurrentVelocity, MaxSpeed * Owner.WantedSpeed);
+		else
+			CurrentVelocity = Vector2.ClampMagnitude(CurrentVelocity, MaxSpeed);
 		Velocity = CurrentVelocity;
 
-		if (Animator) Animator.SetFloat("Speed", (Velocity.magnitude - MinSpeed) / (MaxSpeed - MinSpeed));
+		//(CurrentVelocity.magnitude - MinSpeed) / (MaxSpeed - MinSpeed)
+		if (Animator != null) Animator.SetFloat("Speed", ProcentageSpeed);
 	}
 
 	protected virtual IEnumerator Dodge()
@@ -627,13 +646,13 @@ public class Minion : Attacker
 
 	protected virtual void StartAction()
 	{
+		Debug.Log("Starting Attack");
 		Attacking = true;
 		if (Animator != null) Animator.SetTrigger("Attack");
 	}
 
 	public virtual void TriggerDoAction()
 	{
-		Debug.Log("Finished Attack");
 		DoAction();
 		ResetAction();
 	}

@@ -38,6 +38,7 @@ public class MinionLevelInfo
 
 	public float WantedDistanceToOtherThingsX = 1f;
 	public float WantedDistanceToOtherThingsY = 0.1f;
+	public bool AnimationCanMove = true;
 
 	public float BodyCenterYDiff
 	{
