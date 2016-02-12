@@ -25,6 +25,9 @@ public class KI_Owner : Owner
 	[Header("Attacking")]
 	public float ForgetDistance = 15f;
 
+	private int wantedNextMinion = -1;
+	public Timer SpawnMinionCooldown = new Timer(2f);
+
 	public enum States
 	{
 		IDLE,
@@ -54,7 +57,7 @@ public class KI_Owner : Owner
 			Minion[] minions = StartInfo.Spawn(CurrentTargetPosition);
 			for (int i = 0; i < minions.Length; i++)
 			{
-				RecruitMinion(minions[i], true);
+				AddMinion(minions[i], true);
 			}
 		}
 	}
@@ -129,9 +132,6 @@ public class KI_Owner : Owner
 		}
 	}
 
-	private int wantedNextMinion = -1;
-	public Timer SpawnMinionCooldown = new Timer(2f);
-
 	protected virtual void UpdateRecruiting()
 	{
 		if (wantedNextMinion < 0)
@@ -187,14 +187,6 @@ public class KI_Owner : Owner
 		base.Update();
 		transform.position = MinionCenter;
 
-		if (Type == Types.AGGRESSIVE && CanRecruitMinions)
-		{
-			if (UpdateRecruitableMinions.UpdateAutoReset())
-			{
-				TryRecruit(Souls);
-			}
-		}
-
 		if (Minions.Count == 0 && FlyingSouls.Count == 0)
 		{
 			Die();
@@ -217,19 +209,6 @@ public class KI_Owner : Owner
 			//Else walk somewhere
 			State = States.WALKING;
 
-			if (Souls > 0 && RecruitableMinion.Count > 0)
-			{
-				//Try to get to recruitable Minions
-				for (int i = 0; i < Mathf.Min(RecruitableMinion.Count, MaxRecruitableMinionsChecked); i++)
-				{
-					if (GameManager.Instance.InRecruitRange(this, RecruitableMinion[i]))
-					{
-						//In range, walk tawards
-						CurrentTargetPosition = RecruitableMinion[i].transform.position;
-						return;
-					}
-				}
-			}
 			CurrentTargetPosition = Utils.PositionInLevel();
 		}
 		else
@@ -279,15 +258,6 @@ public class KI_Owner : Owner
 				Target = other;
 				State = States.ATTACKING;
 			}
-		}
-	}
-
-	public override void CanRecruit(Minion minion)
-	{
-		base.CanRecruit(minion);
-		if (Type == Types.AGGRESSIVE && CanRecruitMinions)
-		{
-			TryRecruit(minion);
 		}
 	}
 }

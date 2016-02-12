@@ -7,6 +7,14 @@ public class Attacker : Attackable
 	[ReadOnly]
 	protected bool Attacking = false;
 
+	public virtual bool MoveWhileActioning
+	{
+		get
+		{
+			return false;
+		}
+	}
+
 	[SerializeField]
 	private float attackRangeX = 1f;
 
@@ -81,16 +89,25 @@ public class Attacker : Attackable
 
 	protected virtual bool CanAttack(Attackable other)
 	{
-		if (ShouldAttack(other) == false)
+		if (!ShouldAttack(other))
 			return false;
 		return GameManager.Instance.CanAttack(this, other);
+	}
+
+	protected override void UpdateAnimator()
+	{
+		base.UpdateAnimator();
+		if (Animator != null)
+		{
+			Animator.SetBool("Attacking", Attacking);
+		}
 	}
 
 	protected virtual bool ShouldAttack(Attackable other)
 	{
 		if (other == null)
 			return false;
-		if (other.Health == 0)
+		if (other.IsDead)
 			return false;
 		if (other.Owner != null && other.Owner == Owner)
 			return false;

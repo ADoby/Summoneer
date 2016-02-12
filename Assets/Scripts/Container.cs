@@ -17,7 +17,7 @@ public class Container : Attackable
 			owner.CurrentTargetPosition = BodyCenter;
 			for (int i = 0; i < minions.Length; i++)
 			{
-				owner.RecruitMinion(minions[i], true);
+				owner.AddMinion(minions[i], true);
 			}
 			owner.SetCurrentAttacker(attacker);
 		}

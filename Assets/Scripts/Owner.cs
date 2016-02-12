@@ -39,7 +39,6 @@ public class Owner : MonoBehaviour
 	public Vector3 CurrentTargetPosition = Vector3.zero;
 	public Vector3 MinionCenter = Vector3.zero;
 	public Vector2 MinionVelocity = Vector3.zero;
-	public List<Minion> RecruitableMinion = new List<Minion>();
 
 	public float WantedSpeed = 0f;
 
@@ -83,17 +82,16 @@ public class Owner : MonoBehaviour
 		Souls++;
 	}
 
-	public virtual void RecruitMinion(Minion minion, bool force = false)
+	public virtual void AddMinion(Minion minion, bool force = false)
 	{
 		if (minion == null)
 			return;
 		if (Minions.Contains(minion))
 			return;
-		minion.Recruit(this, force);
 		Minions.Add(minion);
+		minion.Owner = this;
 
 		RelativeStrength += minion.RelativeStrength;
-		CanNoLongerRecruit(minion);
 	}
 
 	public void SetMinionTarget()
@@ -105,94 +103,9 @@ public class Owner : MonoBehaviour
 		}
 	}
 
-	public virtual void CanRecruit(Minion minion)
-	{
-		if (GameManager.Instance.InRecruitRange(this, minion))
-		{
-			if (!RecruitableMinion.Contains(minion))
-				RecruitableMinion.Add(minion);
-		}
-	}
-
-	public virtual void CanNoLongerRecruit(Minion minion)
-	{
-		if (RecruitableMinion.Contains(minion))
-			RecruitableMinion.Remove(minion);
-	}
-
-	public virtual void TryRecruit(int amount)
-	{
-		if (Souls < amount)
-			amount = Souls;
-
-		for (int i = 0; i < RecruitableMinion.Count; i++)
-		{
-			if (TryRecruit(RecruitableMinion[i]))
-				amount--;
-			if (amount == 0)
-				break;
-		}
-	}
-
-	protected virtual bool TryRecruit(Minion minion)
-	{
-		if (Souls <= 0)
-			return false;
-		if (GameManager.Instance.InRecruitRange(this, minion))
-		{
-			StartCoroutine(RecruitMinionLater(minion));
-			return true;
-		}
-		return false;
-	}
-
 	public virtual Vector3 GetSoulStartPosition()
 	{
 		return transform.position;
-	}
-
-	public IEnumerator RecruitMinionLater(Minion minion)
-	{
-		if (Souls <= 0)
-		{
-			yield break;
-		}
-		Souls--;
-		Transform rect = GameManager.Instance.SoulPrefab.Spawn().transform;
-		FlyingSouls.Add(rect.gameObject);
-
-		rect.localScale = Vector3.one;
-
-		float lerp = 0f;
-		while (lerp < 1f)
-		{
-			//if it gets claimed while we fly
-			if (minion.Owner != null)
-				break;
-			lerp += Time.deltaTime;
-			rect.position = Vector3.Lerp(GetSoulStartPosition(), minion.Body.position, Mathf.Clamp01(lerp));
-			yield return null;
-		}
-
-		//Only really recruit if minion is free anymore
-		if (minion.Owner == null)
-		{
-			RecruitMinion(minion, false);
-		}
-		else
-		{
-			lerp = 0f;
-			Vector3 start = rect.position;
-			while (lerp < 1f)
-			{
-				lerp += Time.deltaTime;
-				rect.position = Vector3.Lerp(start, GetSoulStartPosition(), Mathf.Clamp01(lerp));
-				yield return null;
-			}
-			Souls++;
-		}
-		FlyingSouls.Remove(rect.gameObject);
-		rect.gameObject.Despawn();
 	}
 
 	protected virtual void Update()
@@ -218,7 +131,8 @@ public class Owner : MonoBehaviour
 	}
 
 	public virtual void IHaveBeenAttacked(Attackable other)
-	{ }
+	{
+	}
 
 	protected virtual void Die()
 	{
@@ -236,24 +150,10 @@ public class Owner : MonoBehaviour
 
 	protected virtual void Awake()
 	{
-		GameEvents.MinionRecruited += OnMinionRecruited;
-		GameEvents.MinionReleased += OnMinionReleased;
 	}
 
 	protected virtual void OnDestroy()
 	{
-		GameEvents.MinionRecruited -= OnMinionRecruited;
-		GameEvents.MinionReleased -= OnMinionReleased;
-	}
-
-	protected virtual void OnMinionReleased(Minion minion)
-	{
-		CanRecruit(minion);
-	}
-
-	protected virtual void OnMinionRecruited(Minion minion)
-	{
-		CanNoLongerRecruit(minion);
 	}
 
 	protected virtual void SpawnMinion(int index)
@@ -261,7 +161,7 @@ public class Owner : MonoBehaviour
 		if (Souls > 0)
 		{
 			Minion minion = MinionManager.SpawnMinion(MinionCenter, index);
-			RecruitMinion(minion, true);
+			AddMinion(minion, true);
 			Souls--;
 		}
 	}

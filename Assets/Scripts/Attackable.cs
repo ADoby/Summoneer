@@ -144,11 +144,19 @@ public class Attackable : SpriteHolder
 		}
 	}
 
+	public virtual bool IsAlive
+	{
+		get
+		{
+			return Health > 0f;
+		}
+	}
+
 	public virtual bool IsDead
 	{
 		get
 		{
-			return Health <= 0f;
+			return !IsAlive;
 		}
 	}
 
@@ -157,6 +165,16 @@ public class Attackable : SpriteHolder
 		get
 		{
 			return BaseHealth;
+		}
+	}
+
+	public float HealthPercentage
+	{
+		get
+		{
+			if (MaxHealth <= 0)
+				return 0f;
+			return Health / MaxHealth;
 		}
 	}
 
@@ -204,9 +222,25 @@ public class Attackable : SpriteHolder
 		rigidbody = GetComponent<Rigidbody2D>();
 	}
 
+	protected override void Update()
+	{
+		base.Update();
+		UpdateAnimator();
+	}
+
+	protected virtual void UpdateAnimator()
+	{
+		if (Animator != null)
+		{
+			Animator.SetFloat("Health", HealthPercentage);
+			Animator.SetBool("Alive", IsAlive);
+		}
+	}
+
 	protected virtual void Reset()
 	{
 		Health = MaxHealth;
+		UpdateAnimator();
 	}
 
 	protected override void OnSpawn()

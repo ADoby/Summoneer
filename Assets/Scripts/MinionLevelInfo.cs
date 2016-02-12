@@ -33,6 +33,7 @@ public class MinionLevelInfo
 	public float Power = 1f;
 	public float ActionStartTime = 0.1f;
 	public float ActionCooldown = 0.5f;
+	public bool MoveWhileActioning = false;
 
 	public float Experience = 100f;
 

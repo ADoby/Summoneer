@@ -5,14 +5,11 @@ using UnityEngine;
 
 public class Minion : Attacker
 {
+	private const float MinSpeed = 0f;
+	private const float SpeedMult = 5000f;
+
 	[Header("Setup")]
 	public List<MinionLevelInfo> LevelInfos = new List<MinionLevelInfo>();
-
-	public int Level = 0;
-	public bool Recruitable = false;
-
-	public bool DoingLevelUp = false;
-	public bool AnimationCanMove = true;
 
 	#region LEVELINFO
 
@@ -132,6 +129,14 @@ public class Minion : Attacker
 		}
 	}
 
+	public override bool MoveWhileActioning
+	{
+		get
+		{
+			return CurrentLevelInfo.MoveWhileActioning;
+		}
+	}
+
 	public Transform UperBoundary
 	{
 		get
@@ -234,14 +239,18 @@ public class Minion : Attacker
 
 	#endregion LEVELINFO
 
+	public int Level = 0;
+
+	public bool DoingLevelUp = false;
+	public bool AnimationCanMove = true;
+
 	public Timer HealthRegenWaitTimer = new Timer() { Time1 = 2f };
 
 	public GameObject ExperienceBarPrefab;
 	public ProgressBarUI ExperienceBar;
-	private const float MinSpeed = 0f;
-	private const float SpeedMult = 5000f;
 
 	public float MaxSpeedDistance = 5f;
+	public float DistanceToStopAction = 1f;
 
 	public Timer CheckNearFieldTimer = new Timer() { Time1 = 0.5f };
 	public LayerMask SightMask;
@@ -257,23 +266,6 @@ public class Minion : Attacker
 
 	[ReadOnly]
 	public float ProcentageSpeed;
-
-	public override float Experience
-	{
-		get
-		{
-			return experience;
-		}
-		set
-		{
-			experience = value;
-			if (ExperienceBar) ExperienceBar.Set(ExperienceProcentage);
-			if (experience > NeededExperience)
-			{
-				StartLevelUp();
-			}
-		}
-	}
 
 	[ReadOnly]
 	public float CurrentDistance;
@@ -296,6 +288,8 @@ public class Minion : Attacker
 	private Attackable other;
 	private Vector3 diff;
 
+	#region Attackable Properties
+
 	public override Vector3 BodyCenter
 	{
 		get
@@ -304,15 +298,30 @@ public class Minion : Attacker
 		}
 	}
 
-	public float HealthProcentage
+	#endregion Attackable Properties
+
+	#region Attacker Properties
+
+	public override float Experience
 	{
 		get
 		{
-			if (MaxHealth <= 0)
-				return 0f;
-			return Health / MaxHealth;
+			return experience;
+		}
+		set
+		{
+			experience = value;
+			if (ExperienceBar) ExperienceBar.Set(ExperienceProcentage);
+			if (experience > NeededExperience)
+			{
+				StartLevelUp();
+			}
 		}
 	}
+
+	#endregion Attacker Properties
+
+	#region Properties
 
 	public float ExperienceProcentage
 	{
@@ -324,39 +333,27 @@ public class Minion : Attacker
 		}
 	}
 
-	private bool WasClaimable = false;
-
-	public bool Claimable
+	public bool CanMove
 	{
 		get
 		{
-			return Health == 0f && Owner == null;
+			return IsAlive && (!Attacking || !MoveWhileActioning);
 		}
 	}
 
-	public override float Health
+	#endregion Properties
+
+	#region Health
+
+	protected virtual void UpdateHealthRegen()
 	{
-		get
-		{
-			return health;
-		}
-		set
-		{
-			health = value;
-			for (int i = 0; i < Sprites.Length; i++)
-			{
-				if (Sprites[i] == null)
-					continue;
-				color = Sprites[i].color;
-				color.a = Mathf.Clamp(HealthProcentage, 0.1f, 1f);
-				Sprites[i].color = color;
-			}
-		}
+		if (HealthRegenWaitTimer.Update())
+			Heal(HealthRegen * Time.deltaTime, this);
 	}
 
 	public override float Damage(float amount, Attacker attacker)
 	{
-		if (Claimable || attacker == null)
+		if (IsDead || attacker == null)
 			return 0f;
 		float done = base.Damage(amount, attacker);
 
@@ -374,12 +371,46 @@ public class Minion : Attacker
 		return done;
 	}
 
-	public override void Heal(float amount, Attacker healer)
+	public virtual void Release(Owner byOwner)
 	{
-		if (Claimable)
-			return;
-		base.Heal(amount, healer);
+		if (Owner != null)
+		{
+			//Remove Minion from Owner
+			Owner.ReleaseMinion(this);
+		}
+		Owner = null;
+
+		if (byOwner != null)
+		{
+			//Give Killer Soul
+			byOwner.AddSoul(Body.position);
+		}
+
+		Collider.enabled = false;
+		Velocity = Vector2.zero;
 	}
+
+	public void Reanimate()
+	{
+		Collider.enabled = true;
+	}
+
+	//Overwrite Die (default despawns object)
+	protected override IEnumerator Die(Attacker attacker)
+	{
+		yield return null;
+		if (ReleaseSoulWhenDead)
+			ReleaseSouls(attacker.Owner);
+	}
+
+	public void DoDespawn()
+	{
+		Despawn();
+	}
+
+	#endregion Health
+
+	#region LevelUp
 
 	[ContextMenu("Level Up")]
 	public void LevelUp()
@@ -396,9 +427,12 @@ public class Minion : Attacker
 		}
 
 		DoingLevelUp = true;
+
+		//Trigger LevelUp for current level
+		//Next Level will get "Spawn"
 		if (Animator != null) Animator.SetTrigger("LevelUp");
+
 		SetLevel(Level + 1);
-		if (Animator != null) Animator.SetTrigger("Spawn");
 	}
 
 	public virtual void DoLevelUp()
@@ -419,6 +453,8 @@ public class Minion : Attacker
 		Level = level;
 		CurrentLevelInfo.Show();
 		AnimationCanMove = CurrentLevelInfo.AnimationCanMove;
+
+		if (Animator != null) Animator.SetTrigger("Spawn");
 	}
 
 	public void ShowCurrentLevel()
@@ -456,28 +492,14 @@ public class Minion : Attacker
 		AnimationCanMove = false;
 	}
 
+	#endregion LevelUp
+
 	#region Initilization
-
-	//Overwrite Die (default despawns object)
-	protected override IEnumerator Die(Attacker attacker)
-	{
-		yield return null;
-		if (ReleaseSoulWhenDead)
-			ReleaseSouls(attacker.Owner);
-	}
-
-	protected override void Despawn()
-	{
-		//Trigger Recruited (removes minion from some lists)
-		GameEvents.TriggerMinionRecruited(this);
-		base.Despawn();
-	}
 
 	protected override void Reset()
 	{
 		base.Reset();
-		WasClaimable = false;
-		Attacking = false;
+		ResetAction();
 		DoingLevelUp = false;
 		TargetPosition = transform.position;
 		ResetLevel();
@@ -511,15 +533,17 @@ public class Minion : Attacker
 
 	protected virtual void FixedUpdate()
 	{
-		if (Recruitable && Claimable)
-			return;
-		if (WasClaimable)
-			return;
 		walkDirection = (TargetPosition - transform.position).normalized;
 		CurrentDistance = Vector3.Distance(TargetPosition, transform.position);
 		ProcentageSpeed = Mathf.Clamp01(CurrentDistance / MaxSpeedDistance);
 		if (Owner != null)
 			ProcentageSpeed *= Owner.WantedSpeed;
+
+		if (IsDead)
+			return;
+		if (Attacking && !MoveWhileActioning)
+			return;
+
 		walkDirection = walkDirection * ProcentageSpeed;
 
 		randomize.x = (Random.value * 2) - 1;
@@ -534,9 +558,6 @@ public class Minion : Attacker
 		else
 			CurrentVelocity = Vector2.ClampMagnitude(CurrentVelocity, MaxSpeed);
 		Velocity = CurrentVelocity;
-
-		//(CurrentVelocity.magnitude - MinSpeed) / (MaxSpeed - MinSpeed)
-		if (Animator != null) Animator.SetFloat("Speed", ProcentageSpeed);
 	}
 
 	protected virtual IEnumerator Dodge()
@@ -544,7 +565,7 @@ public class Minion : Attacker
 		int currentIndex = 0;
 		while (true)
 		{
-			if (!Claimable)
+			if (CanMove)
 			{
 				if (currentIndex >= ColliderNear.Length)
 					currentIndex = 0;
@@ -574,28 +595,30 @@ public class Minion : Attacker
 	{
 		base.Update();
 
-		if (Attacking)
+		if (IsDead)
 			return;
 		if (DoingLevelUp)
 			return;
-		if (Claimable)
-			return;
 
 		UpdateThingsNearMe();
-		UpdateAction();
 		UpdateHealthRegen();
-	}
 
-	public void Reanimate()
-	{
-		WasClaimable = false;
-		Collider.enabled = true;
-	}
+		if (Attacking)
+		{
+			//Check if attack can end
+			//We only attack, if our master does not want us to move
+			if (CurrentDistance < DistanceToStopAction)
+			{
+				for (int i = 0; i < EnemiesNear.Count; i++)
+				{
+					if (CanAttack(EnemiesNear[i]))
+						return;
+				}
+			}
 
-	protected virtual void UpdateHealthRegen()
-	{
-		if (HealthRegenWaitTimer.Update())
-			Heal(HealthRegen * Time.deltaTime, this);
+			ResetAction();
+		}
+		UpdateAction();
 	}
 
 	protected virtual void UpdateThingsNearMe()
@@ -633,6 +656,11 @@ public class Minion : Attacker
 	{
 		if (AttackCooldownTimer.Update())
 		{
+			if (!MoveWhileActioning && CurrentDistance > DistanceToStopAction)
+			{
+				return;
+			}
+
 			for (int i = 0; i < EnemiesNear.Count; i++)
 			{
 				if (CanAttack(EnemiesNear[i]))
@@ -646,9 +674,7 @@ public class Minion : Attacker
 
 	protected virtual void StartAction()
 	{
-		Debug.Log("Starting Attack");
 		Attacking = true;
-		if (Animator != null) Animator.SetTrigger("Attack");
 	}
 
 	public virtual void TriggerDoAction()
@@ -681,45 +707,19 @@ public class Minion : Attacker
 		}
 	}
 
-	public void DoDespawn()
-	{
-		Despawn();
-	}
-
 	#endregion Actions
 
-	#region Recruiting
+	#region Animations
 
-	public virtual void Release(Owner byOwner)
+	protected override void UpdateAnimator()
 	{
-		//Release from current owner
-		if (Owner != null)
+		base.UpdateAnimator();
+
+		if (Animator != null)
 		{
-			Owner.AddSoul(Body.position);
-			Owner.ReleaseMinion(this);
+			Animator.SetFloat("Speed", ProcentageSpeed);
 		}
-		Owner = null;
-
-		Collider.enabled = false;
-		Velocity = Vector2.zero;
-
-		if (Animator != null) Animator.SetTrigger("Die");
-
-		GameEvents.TriggerMinionReleased(this);
 	}
 
-	public virtual void Recruit(Owner byOwner, bool force = false)
-	{
-		if (!Recruitable && !Claimable && force == false)
-			return;
-		Owner = byOwner;
-
-		GameEvents.TriggerMinionRecruited(this);
-
-		Reset();
-
-		Position = Utils.ConstraintPositionToLevel(Position);
-	}
-
-	#endregion Recruiting
+	#endregion Animations
 }

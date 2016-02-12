@@ -37,7 +37,7 @@ public class Player : Owner
 		Minion[] minions = StartInfo.Spawn(transform.position);
 		for (int i = 0; i < minions.Length; i++)
 		{
-			RecruitMinion(minions[i], true);
+			AddMinion(minions[i], true);
 		}
 		Souls = souls;
 		GameManager.Instance.RegisterPlayer(this);
@@ -52,30 +52,6 @@ public class Player : Owner
 		}
 		base.Update();
 		cam.TargetPosition = MinionCenter;
-
-		if (Input.GetButtonDown("Recruit"))
-			TryRecruit(Souls);
-	}
-
-	public override void CanRecruit(Minion minion)
-	{
-		base.CanRecruit(minion);
-		if (SpawnedRecruitNotifier.ContainsKey(minion))
-		{
-			return;
-		}
-		if (!GameManager.Instance.InRecruitRange(this, minion))
-			return;
-		FollowUI follow = CanRecruitUIPrefab.Spawn().GetComponent<FollowUI>();
-		SpawnedRecruitNotifier.Add(minion, follow);
-		follow.Set(minion.UperBoundary);
-	}
-
-	public override void CanNoLongerRecruit(Minion minion)
-	{
-		base.CanNoLongerRecruit(minion);
-		if (SpawnedRecruitNotifier.ContainsKey(minion))
-			SpawnedRecruitNotifier[minion].Set(null);
 	}
 
 	public override Vector3 GetSoulStartPosition()
