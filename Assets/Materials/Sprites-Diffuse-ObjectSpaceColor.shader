@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+
 Shader "Sprites/Diffuse-VertexColor"
 {
 	Properties
@@ -55,7 +57,7 @@ Shader "Sprites/Diffuse-VertexColor"
 				#endif
 
 				UNITY_INITIALIZE_OUTPUT(Input, o);
-				float lerpv = (1 - max(min((mul(_Object2World, v.vertex).xyz.y - _ObjectPosition.y) * (10 - VertexEffectScale), 1), 0));
+				float lerpv = (1 - max(min((mul(unity_ObjectToWorld, v.vertex).xyz.y - _ObjectPosition.y) * (10 - VertexEffectScale), 1), 0));
 
 				o.color = v.color * _Color;
 				o.color2 = _Color2;
