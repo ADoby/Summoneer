@@ -5,7 +5,7 @@ public class SimpleBootstrap : ContextView
 {
     public static SimpleBootstrap Instance;
 
-    private SimpleContext simpleContext;
+    protected SimpleContext simpleContext;
 
     public SimpleContext SimpleContext
     {

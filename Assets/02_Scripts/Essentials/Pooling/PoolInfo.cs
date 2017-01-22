@@ -53,7 +53,7 @@ public class PoolInfo
 
     public GameObject CreateInstance()
     {
-        return Pool.GetEntity(this).Owner;
+        return Pool.GetEntity(this).gameObject;
     }
 
     public void Despawn(PooledBehaviour instance)

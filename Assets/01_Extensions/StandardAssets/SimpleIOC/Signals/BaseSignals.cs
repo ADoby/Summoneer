@@ -17,6 +17,11 @@ public class StartSignal : Signal { }
 public class UpdateSignal : Signal<float> { }
 
 /// <summary>
+/// Basic signal for update, float=deltaTime
+/// </summary>
+public class FixedUpdateSignal : Signal { }
+
+/// <summary>
 /// Basic signal for localization, string=language
 /// </summary>
 public class LocalizeSignal : Signal<string> { }

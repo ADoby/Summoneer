@@ -43,14 +43,14 @@ public class Player : Owner
 		GameManager.Instance.RegisterPlayer(this);
 	}
 
-	protected override void Update()
+	protected override void DoUpdate()
 	{
 		if (Input.GetButton("Move"))
 		{
 			CurrentTargetPosition = cam.cam.ScreenToWorldPoint(Input.mousePosition);
 			CurrentTargetPosition.z = 0;
 		}
-		base.Update();
+		base.DoUpdate();
 		cam.TargetPosition = MinionCenter;
 	}
 

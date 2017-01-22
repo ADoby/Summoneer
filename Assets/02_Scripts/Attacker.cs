@@ -72,19 +72,18 @@ public class Attacker : Attackable
         }
     }
 
-    public virtual bool DoDamageToTarget(Attackable target)
+    public void AddExperience(float value)
     {
-        if (CanAttack(target))
+        Experience += value;
+    }
+
+    protected override void UpdateAnimator()
+    {
+        base.UpdateAnimator();
+        if (Animator != null && Animator.isInitialized)
         {
-            float damageDone = target.Damage(Power, this);
-            Experience += GameManager.Instance.CalculateDamageDoneExp(damageDone, RelativeStrength, target.RelativeStrength);
-            if (target.IsDead)
-            {
-                Experience += GameManager.Instance.CalculateEnemyKilledExp(RelativeStrength, target.RelativeStrength);
-            }
-            return true;
+            Animator.SetBool("Attacking", Attacking);
         }
-        return false;
     }
 
     protected virtual bool CanAttack(Attackable other)
@@ -94,22 +93,13 @@ public class Attacker : Attackable
         return GameManager.Instance.CanAttack(this, other);
     }
 
-    protected override void UpdateAnimator()
-    {
-        base.UpdateAnimator();
-        if (Animator != null)
-        {
-            Animator.SetBool("Attacking", Attacking);
-        }
-    }
-
     protected virtual bool ShouldAttack(Attackable other)
     {
         if (other == null)
             return false;
         if (other.IsDead)
             return false;
-        if (other.Owner != null && other.Owner == Owner)
+        if (Owner != null && other.Owner == Owner)
             return false;
         return true;
     }

@@ -102,7 +102,7 @@ namespace DG.Tweening
             LoadCurrentValues(ref useStartAsStartValue, ref startValueFloat, ref startValueV3, ref startValueV2, ref startValueColor, ref startValueString, ref startValueRect, ref startValueTransform);
         }
 
-        public void LoadCurrentValues(ref bool should, ref float floatValue, ref Vector3 ValueV3, ref Vector2 ValueV2, ref Color ValueColor, ref string ValueString, ref Rect ValueRect, ref Transform ValueTransform)
+        public void LoadCurrentValues(ref bool should, ref float floatValue, ref Vector3 valueV3, ref Vector2 valueV2, ref Color valueColor, ref string valueString, ref Rect valueRect, ref Transform valueTransform)
         {
             if (!should)
                 return;
@@ -115,19 +115,19 @@ namespace DG.Tweening
                     switch (targetType)
                     {
                         case TargetType.RectTransform:
-                            ValueV3 = ((RectTransform)targetComponent).anchoredPosition3D;
+                            valueV3 = ((RectTransform)targetComponent).anchoredPosition3D;
                             break;
 
                         case TargetType.Transform:
-                            ValueV3 = ((Transform)targetComponent).position;
+                            valueV3 = ((Transform)targetComponent).position;
                             break;
 
                         case TargetType.Rigidbody2D:
-                            ValueV3 = ((Rigidbody2D)targetComponent).position;
+                            valueV3 = ((Rigidbody2D)targetComponent).position;
                             break;
 
                         case TargetType.Rigidbody:
-                            ValueV3 = ((Rigidbody)targetComponent).position;
+                            valueV3 = ((Rigidbody)targetComponent).position;
                             break;
                     }
 
@@ -137,11 +137,11 @@ namespace DG.Tweening
                     switch (targetType)
                     {
                         case TargetType.RectTransform:
-                            ValueV3 = ((RectTransform)targetComponent).anchoredPosition;
+                            valueV3 = ((RectTransform)targetComponent).anchoredPosition;
                             break;
 
                         case TargetType.Transform:
-                            ValueV3 = ((Transform)targetComponent).localPosition;
+                            valueV3 = ((Transform)targetComponent).localPosition;
                             break;
                     }
 
@@ -151,11 +151,11 @@ namespace DG.Tweening
                     switch (targetType)
                     {
                         case TargetType.RectTransform:
-                            ValueV3 = ((RectTransform)targetComponent).eulerAngles;
+                            valueV3 = ((RectTransform)targetComponent).eulerAngles;
                             break;
 
                         case TargetType.Transform:
-                            ValueV3 = ((Transform)targetComponent).eulerAngles;
+                            valueV3 = ((Transform)targetComponent).eulerAngles;
                             break;
                     }
 
@@ -165,11 +165,11 @@ namespace DG.Tweening
                     switch (targetType)
                     {
                         case TargetType.RectTransform:
-                            ValueV3 = ((RectTransform)targetComponent).localEulerAngles;
+                            valueV3 = ((RectTransform)targetComponent).localEulerAngles;
                             break;
 
                         case TargetType.Transform:
-                            ValueV3 = ((Transform)targetComponent).localEulerAngles;
+                            valueV3 = ((Transform)targetComponent).localEulerAngles;
                             break;
                     }
 
@@ -179,11 +179,11 @@ namespace DG.Tweening
                     switch (targetType)
                     {
                         case TargetType.RectTransform:
-                            ValueV3 = ((RectTransform)targetComponent).localScale;
+                            valueV3 = ((RectTransform)targetComponent).localScale;
                             break;
 
                         case TargetType.Transform:
-                            ValueV3 = ((Transform)targetComponent).localScale;
+                            valueV3 = ((Transform)targetComponent).localScale;
                             break;
                     }
 
@@ -194,23 +194,23 @@ namespace DG.Tweening
                     switch (targetType)
                     {
                         case TargetType.SpriteRenderer:
-                            ValueColor = ((SpriteRenderer)targetComponent).color;
+                            valueColor = ((SpriteRenderer)targetComponent).color;
                             break;
 
                         case TargetType.Renderer:
-                            ValueColor = ((Renderer)targetComponent).material.color;
+                            valueColor = ((Renderer)targetComponent).material.color;
                             break;
 
                         case TargetType.Image:
-                            ValueColor = ((Image)targetComponent).color;
+                            valueColor = ((Image)targetComponent).color;
                             break;
 
                         case TargetType.Text:
-                            ValueColor = ((Text)targetComponent).color;
+                            valueColor = ((Text)targetComponent).color;
                             break;
 
                         case TargetType.Light:
-                            ValueColor = ((Light)targetComponent).color;
+                            valueColor = ((Light)targetComponent).color;
                             break;
 #if DOTWEEN_TMP
                             case TargetType.TextMeshProUGUI:
@@ -230,28 +230,28 @@ namespace DG.Tweening
                     switch (targetType)
                     {
                         case TargetType.SpriteRenderer:
-                            ValueColor = ((SpriteRenderer)targetComponent).color;
-                            floatValue = ValueColor.a;
+                            valueColor = ((SpriteRenderer)targetComponent).color;
+                            floatValue = valueColor.a;
                             break;
 
                         case TargetType.Renderer:
-                            ValueColor = ((Renderer)targetComponent).material.color;
-                            floatValue = ValueColor.a;
+                            valueColor = ((Renderer)targetComponent).material.color;
+                            floatValue = valueColor.a;
                             break;
 
                         case TargetType.Image:
-                            ValueColor = ((Image)targetComponent).color;
-                            floatValue = ValueColor.a;
+                            valueColor = ((Image)targetComponent).color;
+                            floatValue = valueColor.a;
                             break;
 
                         case TargetType.Text:
-                            ValueColor = ((Text)targetComponent).color;
-                            floatValue = ValueColor.a;
+                            valueColor = ((Text)targetComponent).color;
+                            floatValue = valueColor.a;
                             break;
 
                         case TargetType.Light:
-                            ValueColor = ((Light)targetComponent).color;
-                            floatValue = ValueColor.a;
+                            valueColor = ((Light)targetComponent).color;
+                            floatValue = valueColor.a;
                             break;
 
                         case TargetType.CanvasGroup:
@@ -313,22 +313,22 @@ namespace DG.Tweening
                     break;
 
                 case DOTweenAnimationTypeEx.UIWidthHeight:
-                    ValueV2 = ((RectTransform)targetComponent).sizeDelta;
+                    valueV2 = ((RectTransform)targetComponent).sizeDelta;
 
                     break;
 
                 case DOTweenAnimationTypeEx.UIPivot:
-                    ValueV2 = ((RectTransform)targetComponent).pivot;
+                    valueV2 = ((RectTransform)targetComponent).pivot;
 
                     break;
 
                 case DOTweenAnimationTypeEx.UIAnchor:
-                    ValueV2 = ((RectTransform)targetComponent).anchorMin;
-                    ValueRect.x = ValueV2.x;
-                    ValueRect.y = ValueV2.y;
-                    ValueV2 = ((RectTransform)targetComponent).anchorMax;
-                    ValueRect.width = ValueV2.x;
-                    ValueRect.height = ValueV2.y;
+                    valueV2 = ((RectTransform)targetComponent).anchorMin;
+                    valueRect.x = valueV2.x;
+                    valueRect.y = valueV2.y;
+                    valueV2 = ((RectTransform)targetComponent).anchorMax;
+                    valueRect.width = valueV2.x;
+                    valueRect.height = valueV2.y;
 
                     break;
 
@@ -337,8 +337,16 @@ namespace DG.Tweening
             }
         }
 
+        public float ValueFloat;
+        public Vector3 ValueV3;
+        public Vector2 ValueV2;
+        public Color ValueColor = new Color(1, 1, 1, 1);
+        public string ValueString = "";
+        public Rect ValueRect = new Rect(0, 0, 0, 0);
+        public Transform ValueTransform;
+
         // Used also by DOTweenAnimationInspector when applying runtime changes and restarting
-        public Tween CreateTween()
+        public Tween CreateTween(bool show)
         {
             if (targetComponent == null)
             {
@@ -353,6 +361,27 @@ namespace DG.Tweening
                 targetType = TypeToDOTargetType(targetComponent.GetType());
             }
 
+            if (show)
+            {
+                ValueFloat = endValueFloat;
+                ValueV3 = endValueV3;
+                ValueV2 = endValueV2;
+                ValueColor = endValueColor;
+                ValueString = endValueString;
+                ValueRect = endValueRect;
+                ValueTransform = endValueTransform;
+            }
+            else
+            {
+                ValueFloat = startValueFloat;
+                ValueV3 = startValueV3;
+                ValueV2 = startValueV2;
+                ValueColor = startValueColor;
+                ValueString = startValueString;
+                ValueRect = startValueRect;
+                ValueTransform = startValueTransform;
+            }
+
             switch (animationType)
             {
                 case DOTweenAnimationTypeEx.None:
@@ -362,20 +391,20 @@ namespace DG.Tweening
                     if (useTargetAsV3)
                     {
                         isRelative = false;
-                        if (endValueTransform == null)
+                        if (ValueTransform == null)
                         {
                             Debug.LogWarning(string.Format("{0} :: This tween's TO target is NULL, a Vector3 of (0,0,0) will be used instead", this.gameObject.name), this.gameObject);
-                            endValueV3 = Vector3.zero;
+                            ValueV3 = Vector3.zero;
                         }
                         else
                         {
                             if (targetType == TargetType.RectTransform)
                             {
-                                RectTransform endValueT = endValueTransform as RectTransform;
+                                RectTransform endValueT = ValueTransform as RectTransform;
                                 if (endValueT == null)
                                 {
                                     Debug.LogWarning(string.Format("{0} :: This tween's TO target should be a RectTransform, a Vector3 of (0,0,0) will be used instead", this.gameObject.name), this.gameObject);
-                                    endValueV3 = Vector3.zero;
+                                    ValueV3 = Vector3.zero;
                                 }
                                 else
                                 {
@@ -387,29 +416,29 @@ namespace DG.Tweening
                                     else
                                     {
                                         // Problem: doesn't work inside Awake (ararargh!)
-                                        endValueV3 = DOTweenUtils46.SwitchToRectTransform(endValueT, rTarget);
+                                        ValueV3 = DOTweenUtils46.SwitchToRectTransform(endValueT, rTarget);
                                     }
                                 }
                             }
-                            else endValueV3 = endValueTransform.position;
+                            else ValueV3 = ValueTransform.position;
                         }
                     }
                     switch (targetType)
                     {
                         case TargetType.RectTransform:
-                            tween = ((RectTransform)targetComponent).DOAnchorPos3D(endValueV3, duration, optionalBool0);
+                            tween = ((RectTransform)targetComponent).DOAnchorPos3D(ValueV3, duration, optionalBool0);
                             break;
 
                         case TargetType.Transform:
-                            tween = ((Transform)targetComponent).DOMove(endValueV3, duration, optionalBool0);
+                            tween = ((Transform)targetComponent).DOMove(ValueV3, duration, optionalBool0);
                             break;
 
                         case TargetType.Rigidbody2D:
-                            tween = ((Rigidbody2D)targetComponent).DOMove(endValueV3, duration, optionalBool0);
+                            tween = ((Rigidbody2D)targetComponent).DOMove(ValueV3, duration, optionalBool0);
                             break;
 
                         case TargetType.Rigidbody:
-                            tween = ((Rigidbody)targetComponent).DOMove(endValueV3, duration, optionalBool0);
+                            tween = ((Rigidbody)targetComponent).DOMove(ValueV3, duration, optionalBool0);
                             break;
                     }
                     break;
@@ -418,11 +447,11 @@ namespace DG.Tweening
                     switch (targetType)
                     {
                         case TargetType.RectTransform:
-                            tween = ((RectTransform)targetComponent).DOAnchorPos(endValueV3, duration, optionalBool0);
+                            tween = ((RectTransform)targetComponent).DOAnchorPos(ValueV3, duration, optionalBool0);
                             break;
 
                         case TargetType.Transform:
-                            tween = ((Transform)targetComponent).DOLocalMove(endValueV3, duration, optionalBool0);
+                            tween = ((Transform)targetComponent).DOLocalMove(ValueV3, duration, optionalBool0);
                             break;
                     }
                     break;
@@ -431,21 +460,21 @@ namespace DG.Tweening
                     switch (targetType)
                     {
                         case TargetType.Transform:
-                            tween = ((Transform)targetComponent).DORotate(endValueV3, duration, optionalRotationMode);
+                            tween = ((Transform)targetComponent).DORotate(ValueV3, duration, optionalRotationMode);
                             break;
 
                         case TargetType.Rigidbody2D:
-                            tween = ((Rigidbody2D)targetComponent).DORotate(endValueFloat, duration);
+                            tween = ((Rigidbody2D)targetComponent).DORotate(ValueFloat, duration);
                             break;
 
                         case TargetType.Rigidbody:
-                            tween = ((Rigidbody)targetComponent).DORotate(endValueV3, duration, optionalRotationMode);
+                            tween = ((Rigidbody)targetComponent).DORotate(ValueV3, duration, optionalRotationMode);
                             break;
                     }
                     break;
 
                 case DOTweenAnimationTypeEx.LocalRotate:
-                    tween = ((Transform)targetComponent).DOLocalRotate(endValueV3, duration, optionalRotationMode);
+                    tween = ((Transform)targetComponent).DOLocalRotate(ValueV3, duration, optionalRotationMode);
                     break;
 
                 case DOTweenAnimationTypeEx.Scale:
@@ -461,25 +490,25 @@ namespace DG.Tweening
                     break;
 #endif
                         default:
-                            tween = ((Transform)targetComponent).DOScale(optionalBool0 ? new Vector3(endValueFloat, endValueFloat, endValueFloat) : endValueV3, duration);
+                            tween = ((Transform)targetComponent).DOScale(optionalBool0 ? new Vector3(ValueFloat, ValueFloat, ValueFloat) : ValueV3, duration);
                             break;
                     }
                     break;
 
                 case DOTweenAnimationTypeEx.UIWidthHeight:
-                    tween = ((RectTransform)targetComponent).DOSizeDelta(optionalBool0 ? new Vector2(endValueFloat, endValueFloat) : endValueV2, duration);
+                    tween = ((RectTransform)targetComponent).DOSizeDelta(optionalBool0 ? new Vector2(ValueFloat, ValueFloat) : ValueV2, duration);
                     break;
 
                 case DOTweenAnimationTypeEx.UIPivot:
-                    tween = ((RectTransform)targetComponent).DOPivot(endValueV2, duration);
+                    tween = ((RectTransform)targetComponent).DOPivot(ValueV2, duration);
                     break;
 
                 case DOTweenAnimationTypeEx.UIAnchor:
 
-                    endValueV2 = new Vector2(endValueRect.x, endValueRect.y);
-                    tween = ((RectTransform)targetComponent).DOAnchorMin(endValueV2, duration);
-                    endValueV2 = new Vector2(endValueRect.width, endValueRect.height);
-                    tween = ((RectTransform)targetComponent).DOAnchorMax(endValueV2, duration);
+                    ValueV2 = new Vector2(ValueRect.x, ValueRect.y);
+                    tween = ((RectTransform)targetComponent).DOAnchorMin(ValueV2, duration);
+                    ValueV2 = new Vector2(ValueRect.width, ValueRect.height);
+                    tween = ((RectTransform)targetComponent).DOAnchorMax(ValueV2, duration);
                     break;
 
                 case DOTweenAnimationTypeEx.Color:
@@ -487,23 +516,23 @@ namespace DG.Tweening
                     switch (targetType)
                     {
                         case TargetType.SpriteRenderer:
-                            tween = ((SpriteRenderer)targetComponent).DOColor(endValueColor, duration);
+                            tween = ((SpriteRenderer)targetComponent).DOColor(ValueColor, duration);
                             break;
 
                         case TargetType.Renderer:
-                            tween = ((Renderer)targetComponent).material.DOColor(endValueColor, duration);
+                            tween = ((Renderer)targetComponent).material.DOColor(ValueColor, duration);
                             break;
 
                         case TargetType.Image:
-                            tween = ((Image)targetComponent).DOColor(endValueColor, duration);
+                            tween = ((Image)targetComponent).DOColor(ValueColor, duration);
                             break;
 
                         case TargetType.Text:
-                            tween = ((Text)targetComponent).DOColor(endValueColor, duration);
+                            tween = ((Text)targetComponent).DOColor(ValueColor, duration);
                             break;
 
                         case TargetType.Light:
-                            tween = ((Light)targetComponent).DOColor(endValueColor, duration);
+                            tween = ((Light)targetComponent).DOColor(ValueColor, duration);
                             break;
 #if DOTWEEN_TK2D
                 case TargetType.tk2dTextMesh:
@@ -531,27 +560,27 @@ namespace DG.Tweening
                     switch (targetType)
                     {
                         case TargetType.SpriteRenderer:
-                            tween = ((SpriteRenderer)targetComponent).DOFade(endValueFloat, duration);
+                            tween = ((SpriteRenderer)targetComponent).DOFade(ValueFloat, duration);
                             break;
 
                         case TargetType.Renderer:
-                            tween = ((Renderer)targetComponent).material.DOFade(endValueFloat, duration);
+                            tween = ((Renderer)targetComponent).material.DOFade(ValueFloat, duration);
                             break;
 
                         case TargetType.Image:
-                            tween = ((Image)targetComponent).DOFade(endValueFloat, duration);
+                            tween = ((Image)targetComponent).DOFade(ValueFloat, duration);
                             break;
 
                         case TargetType.Text:
-                            tween = ((Text)targetComponent).DOFade(endValueFloat, duration);
+                            tween = ((Text)targetComponent).DOFade(ValueFloat, duration);
                             break;
 
                         case TargetType.Light:
-                            tween = ((Light)targetComponent).DOIntensity(endValueFloat, duration);
+                            tween = ((Light)targetComponent).DOIntensity(ValueFloat, duration);
                             break;
 
                         case TargetType.CanvasGroup:
-                            tween = ((CanvasGroup)targetComponent).DOFade(endValueFloat, duration);
+                            tween = ((CanvasGroup)targetComponent).DOFade(ValueFloat, duration);
                             break;
 #if DOTWEEN_TK2D
                 case TargetType.tk2dTextMesh:
@@ -578,7 +607,7 @@ namespace DG.Tweening
                     switch (targetType)
                     {
                         case TargetType.Text:
-                            tween = ((Text)targetComponent).DOText(endValueString, duration, optionalBool0, optionalScrambleMode, optionalString);
+                            tween = ((Text)targetComponent).DOText(ValueString, duration, optionalBool0, optionalScrambleMode, optionalString);
                             break;
 #if DOTWEEN_TK2D
                 case TargetType.tk2dTextMesh:
@@ -601,66 +630,66 @@ namespace DG.Tweening
                     switch (targetType)
                     {
                         case TargetType.RectTransform:
-                            tween = ((RectTransform)targetComponent).DOPunchAnchorPos(endValueV3, duration, optionalInt0, optionalFloat0, optionalBool0);
+                            tween = ((RectTransform)targetComponent).DOPunchAnchorPos(ValueV3, duration, optionalInt0, optionalFloat0, optionalBool0);
                             break;
 
                         case TargetType.Transform:
-                            tween = ((Transform)targetComponent).DOPunchPosition(endValueV3, duration, optionalInt0, optionalFloat0, optionalBool0);
+                            tween = ((Transform)targetComponent).DOPunchPosition(ValueV3, duration, optionalInt0, optionalFloat0, optionalBool0);
                             break;
                     }
                     break;
 
                 case DOTweenAnimationTypeEx.PunchScale:
-                    tween = transform.DOPunchScale(endValueV3, duration, optionalInt0, optionalFloat0);
+                    tween = transform.DOPunchScale(ValueV3, duration, optionalInt0, optionalFloat0);
                     break;
 
                 case DOTweenAnimationTypeEx.PunchRotation:
-                    tween = transform.DOPunchRotation(endValueV3, duration, optionalInt0, optionalFloat0);
+                    tween = transform.DOPunchRotation(ValueV3, duration, optionalInt0, optionalFloat0);
                     break;
 
                 case DOTweenAnimationTypeEx.ShakePosition:
                     switch (targetType)
                     {
                         case TargetType.RectTransform:
-                            tween = ((RectTransform)targetComponent).DOShakeAnchorPos(duration, endValueV3, optionalInt0, optionalFloat0, optionalBool0);
+                            tween = ((RectTransform)targetComponent).DOShakeAnchorPos(duration, ValueV3, optionalInt0, optionalFloat0, optionalBool0);
                             break;
 
                         case TargetType.Transform:
-                            tween = ((Transform)targetComponent).DOShakePosition(duration, endValueV3, optionalInt0, optionalFloat0, optionalBool0);
+                            tween = ((Transform)targetComponent).DOShakePosition(duration, ValueV3, optionalInt0, optionalFloat0, optionalBool0);
                             break;
                     }
                     break;
 
                 case DOTweenAnimationTypeEx.ShakeScale:
-                    tween = transform.DOShakeScale(duration, endValueV3, optionalInt0, optionalFloat0);
+                    tween = transform.DOShakeScale(duration, ValueV3, optionalInt0, optionalFloat0);
                     break;
 
                 case DOTweenAnimationTypeEx.ShakeRotation:
-                    tween = transform.DOShakeRotation(duration, endValueV3, optionalInt0, optionalFloat0);
+                    tween = transform.DOShakeRotation(duration, ValueV3, optionalInt0, optionalFloat0);
                     break;
 
                 case DOTweenAnimationTypeEx.CameraAspect:
-                    tween = ((Camera)targetComponent).DOAspect(endValueFloat, duration);
+                    tween = ((Camera)targetComponent).DOAspect(ValueFloat, duration);
                     break;
 
                 case DOTweenAnimationTypeEx.CameraBackgroundColor:
-                    tween = ((Camera)targetComponent).DOColor(endValueColor, duration);
+                    tween = ((Camera)targetComponent).DOColor(ValueColor, duration);
                     break;
 
                 case DOTweenAnimationTypeEx.CameraFieldOfView:
-                    tween = ((Camera)targetComponent).DOFieldOfView(endValueFloat, duration);
+                    tween = ((Camera)targetComponent).DOFieldOfView(ValueFloat, duration);
                     break;
 
                 case DOTweenAnimationTypeEx.CameraOrthoSize:
-                    tween = ((Camera)targetComponent).DOOrthoSize(endValueFloat, duration);
+                    tween = ((Camera)targetComponent).DOOrthoSize(ValueFloat, duration);
                     break;
 
                 case DOTweenAnimationTypeEx.CameraPixelRect:
-                    tween = ((Camera)targetComponent).DOPixelRect(endValueRect, duration);
+                    tween = ((Camera)targetComponent).DOPixelRect(ValueRect, duration);
                     break;
 
                 case DOTweenAnimationTypeEx.CameraRect:
-                    tween = ((Camera)targetComponent).DORect(endValueRect, duration);
+                    tween = ((Camera)targetComponent).DORect(ValueRect, duration);
                     break;
             }
 
@@ -848,11 +877,11 @@ namespace DG.Tweening
         {
             if (animationType == DOTweenAnimationTypeEx.Move)
             {
-                ((Tweener)tween).ChangeEndValue(transform.position + endValueV3, true);
+                ((Tweener)tween).ChangeEndValue(transform.position + ValueV3, true);
             }
             else if (animationType == DOTweenAnimationTypeEx.LocalMove)
             {
-                ((Tweener)tween).ChangeEndValue(transform.localPosition + endValueV3, true);
+                ((Tweener)tween).ChangeEndValue(transform.localPosition + ValueV3, true);
             }
         }
 

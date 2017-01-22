@@ -4,260 +4,294 @@ using UnityEngine;
 
 public class KI_Owner : Owner
 {
-	public MinionSpawnInfos StartInfo = null;
+    public MinionSpawnInfos StartInfo = null;
 
-	public Attackable Target = null;
-	public float NewRandomTargetDistance = 2f;
-	public Timer UpdateRecruitableMinions = new Timer(2f);
-	public Timer IdleTimer = new Timer(2f, 10f);
+    public Owner TargetOwner = null;
+    public Attackable TargetObject = null;
+    public float NewRandomTargetDistance = 1f;
+    public Timer UpdateRecruitableMinions = new Timer(2f);
+    public Timer IdleTimer = new Timer(2f, 10f);
 
-	public bool CanRecruitMinions = false;
+    public bool CanRecruitMinions = false;
 
-	public float KISightRange = 10f;
+    public float KISightRange = 10f;
 
-	public int MaxRecruitableMinionsChecked = 20;
+    public int MaxRecruitableMinionsChecked = 20;
 
-	[Header("Running")]
-	public float RunDistance = 10f;
+    [Header("Running")]
+    public float RunDistance = 10f;
 
-	public float SaveDistance = 15f;
+    public float SaveDistance = 15f;
 
-	[Header("Attacking")]
-	public float ForgetDistance = 15f;
+    [Header("Attacking")]
+    public float ForgetDistance = 15f;
 
-	private int wantedNextMinion = -1;
-	public Timer SpawnMinionCooldown = new Timer(2f);
+    private int wantedNextMinion = -1;
+    public Timer SpawnMinionCooldown = new Timer(2f);
 
-	public enum States
-	{
-		IDLE,
-		WALKING,
-		ATTACKING,
-		RUNNING
-	}
+    public bool HasTarget
+    {
+        get
+        {
+            if (TargetOwner != null)
+            {
+                if (Vector3.Distance(TargetOwner.MinionCenter, MinionCenter) > ForgetDistance)
+                    TargetOwner = null;
+            }
+            if (TargetObject != null)
+            {
+                if (Vector3.Distance(TargetObject.Position, MinionCenter) > ForgetDistance)
+                    TargetObject = null;
+            }
+            return TargetOwner != null && TargetObject != null;
+        }
+    }
 
-	public States State = States.IDLE;
+    public Vector3 TargetPosition
+    {
+        get
+        {
+            if (TargetOwner != null)
+                CurrentTargetPosition = TargetOwner.MinionCenter;
+            if (TargetObject != null)
+                CurrentTargetPosition = TargetObject.Position;
+            return CurrentTargetPosition;
+        }
+        set
+        {
+            CurrentTargetPosition = value;
+        }
+    }
 
-	public float TargetStrengthDifference(Attackable other)
-	{
-		if (other == null)
-			return 0f;
-		if (other.Owner == null)
-			return RelativeStrength - other.RelativeStrength;
-		return RelativeStrength - other.Owner.RelativeStrength;
-	}
+    public enum States
+    {
+        IDLE,
+        WALKING,
+        ATTACKING,
+        RUNNING
+    }
 
-	protected override void Start()
-	{
-		base.Start();
-		CurrentTargetPosition = transform.position;
+    public States State = States.IDLE;
 
-		if (StartInfo != null)
-		{
-			Minion[] minions = StartInfo.Spawn(CurrentTargetPosition);
-			for (int i = 0; i < minions.Length; i++)
-			{
-				AddMinion(minions[i], true);
-			}
-		}
-	}
+    public float TargetStrengthDifference(Owner other)
+    {
+        if (other == null)
+            return 0f;
+        return RelativeStrength - other.RelativeStrength;
+    }
 
-	protected virtual void UpdateAttacking()
-	{
-		if (Vector3.Distance(CurrentTargetPosition, MinionCenter) > ForgetDistance)
-		{
-			Target = null;
-			State = States.IDLE;
-			return;
-		}
-		CurrentTargetPosition = Target.transform.position;
+    protected override void Start()
+    {
+        base.Start();
+        CurrentTargetPosition = transform.position;
 
-		if (Target.Health == 0f)
-		{
-			if (Target.Owner != null)
-			{
-				if (Target.Owner.Minions.Count > 0)
-				{
-					Target = Target.Owner.Minions[0];
-				}
-				else
-				{
-					Target = null;
-				}
-			}
-			else
-			{
-				Target = null;
-			}
-			if (Target == null)
-			{
-				State = States.IDLE;
-				IdleTimer.Reset();
-				return;
-			}
-			else
-			{
-				State = States.ATTACKING;
-			}
-		}
+        if (StartInfo != null)
+        {
+            Minion[] minions = StartInfo.Spawn(TargetPosition);
+            for (int i = 0; i < minions.Length; i++)
+            {
+                AddMinion(minions[i], true);
+            }
+        }
+        IdleTimer.Reset();
+        UpdateRecruitableMinions.Reset();
+        SpawnMinionCooldown.Reset();
+    }
 
-		//If i am weaker or same strength run away
-		if (TargetStrengthDifference(Target) <= 0)
-		{
-			State = States.RUNNING;
-		}
+    protected virtual void UpdateAttacking()
+    {
+        if (TargetOwner != null)
+        {
+            if (TargetOwner.Minions.Count <= 0)
+            {
+                TargetOwner = null;
+            }
+        }
+        if (TargetObject != null)
+        {
+            if (TargetObject.IsDead)
+            {
+                TargetObject = null;
+            }
+        }
+        if (!HasTarget)
+        {
+            State = States.IDLE;
+            IdleTimer.Reset();
+            return;
+        }
+        else
+        {
+            State = States.ATTACKING;
+        }
 
-		Debug.DrawLine(MinionCenter, CurrentTargetPosition, Color.red);
-	}
+        //If i am weaker or same strength run away
+        if (TargetStrengthDifference(TargetOwner) <= 0)
+        {
+            State = States.RUNNING;
+        }
 
-	protected virtual void UpdateRunning()
-	{
-		if (Target.Owner != null)
-		{
-			CurrentTargetPosition = MinionCenter - (Target.Owner.MinionCenter - CurrentTargetPosition).normalized * RunDistance;
-			Debug.DrawLine(MinionCenter, CurrentTargetPosition, Color.blue);
+        Debug.DrawLine(MinionCenter, TargetPosition, Color.red);
+    }
 
-			if (TargetStrengthDifference(Target) > 0)
-				State = States.ATTACKING;
+    protected virtual void UpdateRunning()
+    {
+        if (HasTarget)
+        {
+            TargetPosition = MinionCenter - (TargetOwner.MinionCenter - TargetPosition).normalized * RunDistance;
+            Debug.DrawLine(MinionCenter, TargetPosition, Color.blue);
 
-			if (Vector3.Distance(Target.Owner.CurrentTargetPosition, CurrentTargetPosition) > SaveDistance)
-			{
-				Target = null;
-				State = States.IDLE;
-			}
-		}
-		else
-		{
-			Target = null;
-		}
-	}
+            if (TargetStrengthDifference(TargetOwner) > 0)
+                State = States.ATTACKING;
 
-	protected virtual void UpdateRecruiting()
-	{
-		if (wantedNextMinion < 0)
-		{
-			//Calculate next wanted minion
-			if (SpawnMinionCooldown.Update())
-			{
-				wantedNextMinion = 0;
-			}
-		}
-		else
-		{
-			//Wait until enough souls, then buy minion
-			if (Souls > 0)
-			{
-				SpawnMinion(wantedNextMinion);
-				SpawnMinionCooldown.Reset();
-				wantedNextMinion = -1;
-			}
-		}
-	}
+            if (Vector3.Distance(TargetOwner.CurrentTargetPosition, TargetPosition) > SaveDistance)
+            {
+                TargetOwner = null;
+                State = States.IDLE;
+            }
+        }
+        else
+        {
+            TargetOwner = null;
+            State = States.IDLE;
+        }
+    }
 
-	protected override void Update()
-	{
-		if (State == States.IDLE)
-			WantedSpeed = 0.1f;
-		if (State == States.ATTACKING)
-			WantedSpeed = 0.7f;
-		if (State == States.RUNNING)
-			WantedSpeed = 0.9f;
-		if (State == States.WALKING)
-			WantedSpeed = 0.3f;
+    protected virtual void UpdateRecruiting()
+    {
+        if (wantedNextMinion < 0)
+        {
+            //Calculate next wanted minion
+            if (SpawnMinionCooldown.Update())
+            {
+                wantedNextMinion = 0;
+            }
+        }
+        else
+        {
+            //Wait until enough souls, then buy minion
+            if (Souls > 0)
+            {
+                SpawnMinion(wantedNextMinion);
+                SpawnMinionCooldown.Reset();
+                wantedNextMinion = -1;
+            }
+        }
+    }
 
-		UpdateRecruiting();
+    protected override void DoUpdate()
+    {
+        if (State == States.IDLE)
+            WantedSpeed = 0.1f;
+        if (State == States.ATTACKING)
+            WantedSpeed = 0.7f;
+        if (State == States.RUNNING)
+            WantedSpeed = 0.9f;
+        if (State == States.WALKING)
+            WantedSpeed = 0.3f;
 
-		if (Target != null)
-		{
-			if (State == States.ATTACKING)
-			{
-				UpdateAttacking();
-			}
-			else if (State == States.RUNNING)
-			{
-				UpdateRunning();
-			}
-		}
-		else
-		{
-			FindRandomTargetPosition();
-			Debug.DrawLine(MinionCenter, CurrentTargetPosition);
-		}
+        UpdateRecruiting();
 
-		base.Update();
-		transform.position = MinionCenter;
+        if (HasTarget)
+        {
+            if (State == States.ATTACKING)
+            {
+                UpdateAttacking();
+            }
+            else if (State == States.RUNNING)
+            {
+                UpdateRunning();
+            }
+        }
+        else
+        {
+            UpdateIdle();
+            Debug.DrawLine(MinionCenter, TargetPosition);
+        }
 
-		if (Minions.Count == 0 && FlyingSouls.Count == 0)
-		{
-			Die();
-		}
-	}
+        base.DoUpdate();
+        transform.position = MinionCenter;
 
-	public virtual void SetCurrentAttacker(Attacker attacker)
-	{
-		Target = attacker;
-	}
+        if (Minions.Count == 0 && FlyingSouls.Count == 0)
+        {
+            Die();
+        }
+    }
 
-	protected virtual void FindRandomTargetPosition()
-	{
-		if (State == States.IDLE)
-		{
-			//As long as we are idling
-			if (!IdleTimer.Update())
-				return; //Do nothing
+    public virtual void SetCurrentAttacker(Owner attacker)
+    {
+        TargetOwner = attacker;
+    }
 
-			//Else walk somewhere
-			State = States.WALKING;
+    public override bool DoDamageToTarget(Attackable target, float damage, Attacker attacker)
+    {
+        bool result = base.DoDamageToTarget(target, damage, attacker);
+        if (target == TargetObject && target.IsDead)
+        {
+            TargetObject = null;
+        }
+        return result;
+    }
 
-			CurrentTargetPosition = Utils.PositionInLevel();
-		}
-		else
-		{
-			//Check if close enough
-			if (Vector3.Distance(CurrentTargetPosition, MinionCenter) < NewRandomTargetDistance)
-			{
-				State = States.IDLE;
-				IdleTimer.Reset();
-			}
-		}
-	}
+    protected virtual void UpdateIdle()
+    {
+        if (State == States.IDLE)
+        {
+            //As long as we are idling
+            if (!IdleTimer.Update())
+                return; //Do nothing
 
-	public override void IHaveSeenAttackable(Attackable other)
-	{
-		base.IHaveSeenAttackable(other);
-		if (Type == Types.NEUTRAL)
-			return;
-		IHaveBeenAttacked(other);
-	}
+            //Else walk somewhere
+            State = States.WALKING;
 
-	public override void IHaveBeenAttacked(Attackable other)
-	{
-		base.IHaveBeenAttacked(other);
-		if (Type == Types.NEUTRAL)
-			return;
-		if (other.Owner != null)
-		{
-			if (TargetStrengthDifference(other) <= 0)
-			{
-				//Run away
-				Target = other;
-				State = States.RUNNING;
-			}
-			else
-			{
-				//Fight
-				Target = other;
-				State = States.ATTACKING;
-			}
-		}
-		else
-		{
-			//Destroy if we are not attacking something yet
-			if (Target == null)
-			{
-				Target = other;
-				State = States.ATTACKING;
-			}
-		}
-	}
+            TargetPosition = Utils.PositionInLevel();
+        }
+        else
+        {
+            //Check if close enough
+            if (Vector3.Distance(TargetPosition, MinionCenter) < NewRandomTargetDistance)
+            {
+                State = States.IDLE;
+                IdleTimer.Reset();
+            }
+        }
+    }
+
+    public override void IHaveSeenAttackable(Attackable other)
+    {
+        base.IHaveSeenAttackable(other);
+        if (Type == Types.NEUTRAL)
+            return;
+        if (TargetOwner != null)
+            return;
+        if (TargetObject != null)
+            return;
+        if (other != null)
+        {
+            TargetObject = other;
+            State = States.ATTACKING;
+        }
+    }
+
+    public override void IHaveBeenAttacked(Owner other)
+    {
+        base.IHaveBeenAttacked(other);
+        if (Type == Types.NEUTRAL)
+            return;
+        if (other != null)
+        {
+            if (TargetStrengthDifference(other) <= 0)
+            {
+                //Run away
+                TargetOwner = other;
+                State = States.RUNNING;
+            }
+            else
+            {
+                //Fight
+                TargetOwner = other;
+                State = States.ATTACKING;
+            }
+        }
+    }
 }

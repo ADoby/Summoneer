@@ -462,7 +462,7 @@ namespace DG.DOTweenEditor
                 case DOTweenAnimationTypeEx.Move:
                 case DOTweenAnimationTypeEx.LocalMove:
 
-                    GUIEndValueV3(false, animationType.enumValueIndex == (int)DOTweenAnimationTypeEx.Move);
+                    //GUIEndValueV3(false, animationType.enumValueIndex == (int)DOTweenAnimationTypeEx.Move);
                     GUIEndValueV3(true, animationType.enumValueIndex == (int)DOTweenAnimationTypeEx.Move);
 
                     optionalBool0.boolValue = EditorGUILayout.Toggle("    Snapping", optionalBool0.boolValue);

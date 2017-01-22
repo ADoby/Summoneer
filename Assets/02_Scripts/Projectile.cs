@@ -1,165 +1,179 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class Projectile : PooledBehaviour
 {
-	public float Damage = 0f;
+    public float Damage = 0f;
 
-	public float Speed = 10f;
-	public float StartForce = 1f;
-	public float RotateSpeed = 5f;
+    public float Speed = 10f;
+    public float StartForce = 1f;
+    public float RotateSpeed = 5f;
 
-	public float ExplodeDistance = 0.5f;
+    public float ExplodeDistance = 0.5f;
 
-	public float ExplosionForce = 5f;
-	public float ExplosionRange = 5f;
+    public float ExplosionForce = 5f;
+    public float ExplosionRange = 5f;
 
-	public bool RotateTowards = true;
+    public bool RotateTowards = true;
 
-	[ReadOnly]
-	public bool isAlive = true;
+    [ReadOnly]
+    public bool isAlive = true;
 
-	public Animator Animator;
+    public Animator Animator;
 
-	[ReadOnly]
-	public Attackable Target;
+    [ReadOnly]
+    public Attackable Target;
 
-	[ReadOnly]
-	public Attacker Owner;
+    [ReadOnly]
+    public Attacker Sender;
 
-	protected Rigidbody2D rigid;
+    [ReadOnly]
+    public Owner Owner;
 
-	private List<Attackable> attackables = new List<Attackable>();
-	private Attackable attackable;
-	private AttackableCollider attackableCollider;
+    protected Rigidbody2D rigid;
 
-	protected virtual Vector3 BodyCenter
-	{
-		get
-		{
-			return transform.position;
-		}
-	}
+    private List<Attackable> attackables = new List<Attackable>();
+    private Attackable attackable;
+    private AttackableCollider attackableCollider;
 
-	protected virtual Vector3 Direction
-	{
-		get
-		{
-			if (Target == null)
-				return Vector3.zero;
-			return Target.BodyCenter - BodyCenter;
-		}
-	}
+    protected virtual Vector3 BodyCenter
+    {
+        get
+        {
+            return transform.position;
+        }
+    }
 
-	public void SetSize(float size)
-	{
-		transform.localScale = Vector3.one * size;
-	}
+    protected virtual Vector3 Direction
+    {
+        get
+        {
+            if (Target == null)
+                return Vector3.zero;
+            return Target.BodyCenter - BodyCenter;
+        }
+    }
 
-	public void SetTarget(Attackable target, Attacker owner)
-	{
-		Owner = owner;
-		Target = target;
-		rigid.AddForce(Direction.normalized * StartForce, ForceMode2D.Impulse);
-		float rot_z = Mathf.Atan2(Direction.normalized.y, Direction.normalized.x) * Mathf.Rad2Deg;
-		transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
-	}
+    public void SetSize(float size)
+    {
+        transform.localScale = Vector3.one * size;
+    }
 
-	protected virtual void OnSpawn()
-	{
-		isAlive = true;
-	}
+    public void SetTarget(Attackable target, Attacker attacker, Owner owner)
+    {
+        Owner = owner;
+        Target = target;
+        Sender = attacker;
+        rigid.AddForce(Direction.normalized * StartForce, ForceMode2D.Impulse);
+        float rot_z = Mathf.Atan2(Direction.normalized.y, Direction.normalized.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
+    }
 
-	protected virtual void Awake()
-	{
-		if (Animator == null) Animator = GetComponent<Animator>();
-		rigid = GetComponent<Rigidbody2D>();
-	}
+    public override void OnSpawn()
+    {
+        base.OnSpawn();
 
-	protected virtual void FixedUpdate()
-	{
-		if (!isAlive)
-			return;
-		if (Target != null)
-		{
-			rigid.AddForce(transform.up * Speed);
-			if (RotateTowards)
-			{
-				float rot_z = Mathf.Atan2(Direction.normalized.y, Direction.normalized.x) * Mathf.Rad2Deg;
-				transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0f, 0f, rot_z - 90), Time.deltaTime * RotateSpeed);
-			}
-		}
+        isAlive = true;
+        UpdateView.OnUpdate += DoFixedUpdate;
+    }
 
-		if (Direction.sqrMagnitude < 0.1f)
-			Explode();
-	}
+    public override void OnDespawn()
+    {
+        base.OnDespawn();
+        UpdateView.OnFixedUpdate -= DoFixedUpdate;
+    }
 
-	protected virtual void Explode()
-	{
-		if (!isAlive)
-			return;
-		rigid.velocity = Vector2.zero;
-		isAlive = false;
+    protected override void Awake()
+    {
+        base.Awake();
 
-		if (Owner == null)
-		{
-			Despawn();
-			return;
-		}
+        if (Animator == null) Animator = GetComponent<Animator>();
+        rigid = GetComponent<Rigidbody2D>();
+    }
 
-		if (ExplosionRange > 0)
-		{
-			attackables.Clear();
-			Collider2D[] targets = Physics2D.OverlapCircleAll(rigid.position, ExplosionRange);
+    protected virtual void DoFixedUpdate()
+    {
+        if (!isAlive)
+            return;
+        if (Target != null)
+        {
+            rigid.AddForce(transform.up * Speed);
+            if (RotateTowards)
+            {
+                float rot_z = Mathf.Atan2(Direction.normalized.y, Direction.normalized.x) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0f, 0f, rot_z - 90), Time.deltaTime * RotateSpeed);
+            }
+        }
+        else
+        {
+            Explode();
+        }
 
-			for (int i = 0; i < targets.Length; i++)
-			{
-				attackable = targets[i].GetComponent<Attackable>();
-				attackableCollider = targets[i].GetComponent<AttackableCollider>();
-				if (attackable == null && attackableCollider != null)
-					attackable = attackableCollider.Target;
+        if (Direction.sqrMagnitude < 0.1f)
+            Explode();
+    }
 
-				if (attackable == null)
-					continue;
+    protected virtual void Explode()
+    {
+        if (!isAlive)
+            return;
+        rigid.velocity = Vector2.zero;
+        isAlive = false;
 
-				if (attackable.Owner == Owner.Owner)
-					continue;
+        if (Owner == null)
+        {
+            Despawn();
+            return;
+        }
 
-				attackables.Add(attackable);
-			}
-			for (int i = 0; i < attackables.Count; i++)
-			{
-				ExplodeTarget(attackables[i]);
-			}
-		}
-		else
-		{
-			ExplodeTarget(Target);
-		}
-		if (Animator != null)
-			Animator.SetTrigger("Explode");
-		else
-			Despawn();
-	}
+        if (ExplosionRange > 0)
+        {
+            attackables.Clear();
+            Collider2D[] targets = Physics2D.OverlapCircleAll(rigid.position, ExplosionRange);
 
-	protected virtual void ExplodeTarget(Attackable target)
-	{
-		if (target == null)
-			return;
+            for (int i = 0; i < targets.Length; i++)
+            {
+                attackable = targets[i].GetComponent<Attackable>();
+                attackableCollider = targets[i].GetComponent<AttackableCollider>();
+                if (attackable == null && attackableCollider != null)
+                    attackable = attackableCollider.Target;
 
-		Owner.DoDamageToTarget(target);
+                if (attackable == null)
+                    continue;
 
-		Vector2 force = (target.Position - rigid.position);
-		force *= (ExplosionRange - force.magnitude); //Reverse force magnitude (closer = bigger force)
-		force *= ExplosionForce;
-		if (force.magnitude < 0) //don't suck things in
-			force *= 0;
+                if (Owner != null && attackable.Owner == Owner)
+                    continue;
 
-		target.AddForce(force, ForceMode2D.Impulse);
-	}
+                attackables.Add(attackable);
+            }
+            for (int i = 0; i < attackables.Count; i++)
+            {
+                ExplodeTarget(attackables[i]);
+            }
+        }
+        else
+        {
+            ExplodeTarget(Target);
+        }
+        if (Animator != null)
+            Animator.SetTrigger("Explode");
+        else
+            Despawn();
+    }
 
-	public virtual void Despawn()
-	{
-		gameObject.Despawn();
-	}
+    protected virtual void ExplodeTarget(Attackable target)
+    {
+        if (target == null)
+            return;
+
+        Owner.DoDamageToTarget(target, Damage, Sender);
+
+        Vector2 force = (target.Position - rigid.position);
+        force *= (ExplosionRange - force.magnitude); //Reverse force magnitude (closer = bigger force)
+        force *= ExplosionForce;
+        if (force.magnitude < 0) //don't suck things in
+            force *= 0;
+
+        target.AddForce(force, ForceMode2D.Impulse);
+    }
 }

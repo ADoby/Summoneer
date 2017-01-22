@@ -60,6 +60,7 @@ public class PoolInstance
         var script = go.GetComponent<PooledBehaviour>();
         if (script == null)
             script = go.AddComponent<PooledBehaviour>();
+        script.OnDespawn();
         return script;
     }
 

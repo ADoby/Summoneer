@@ -53,7 +53,7 @@ public class DOTweenHideable : Hideable
             {
                 animations[i].gameObject = gameObject;
                 animations[i].transform = transform;
-                sequence.Insert(0f, animations[i].CreateTween());
+                sequence.Insert(0f, animations[i].CreateTween(true));
             }
         }
     }
@@ -109,7 +109,8 @@ public class DOTweenHideable : Hideable
         {
             if (array[i] != null)
             {
-                tween = array[i].CreateTween();
+                tween = array[i].CreateTween(true);
+
                 tween.Goto(Mathf.Max(time - array[i].delay, 0));
             }
         }

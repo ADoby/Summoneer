@@ -96,8 +96,6 @@ public class SimpleContext : MVCSContext
     protected virtual void BindContext()
     {
         Bind<StartSignal>(true, false);
-        Bind<SimpleButtonSignal>(true, false);
-        BindCommand<SimpleButtonSignal, SimpleButtonCommand>();
     }
 
     protected virtual void AfterBinding()

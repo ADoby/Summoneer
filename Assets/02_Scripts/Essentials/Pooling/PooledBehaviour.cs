@@ -7,28 +7,42 @@ public class PooledBehaviour : SimpleMVCSBehaviour
     [ReadOnly]
     public GameObject Prefab;
 
-    private GameObject owner;
+    public bool ToggleActiveOnSpawn = true;
+    public bool ToggleActiveOnDeSpawn = true;
 
-    public GameObject Owner
+    private GameObject _gameObject;
+
+    public new GameObject gameObject
     {
         get
         {
-            if (owner == null)
-                owner = gameObject;
-            return owner;
+            if (_gameObject == null)
+                _gameObject = base.gameObject;
+            return _gameObject;
         }
     }
 
-    public void Despawn()
+    public virtual void Despawn()
     {
-        PoolManager.Despawn(this);
+        if (Application.isPlaying)
+        {
+            SimpleLibrary.SimplePoolManager.Despawn(this);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public virtual void OnSpawn()
     {
+        if (ToggleActiveOnSpawn)
+            gameObject.SetActive(true);
     }
 
     public virtual void OnDespawn()
     {
+        if (ToggleActiveOnDeSpawn)
+            gameObject.SetActive(false);
     }
 }

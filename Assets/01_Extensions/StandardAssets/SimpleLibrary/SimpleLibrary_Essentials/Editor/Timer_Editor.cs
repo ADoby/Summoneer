@@ -1,10 +1,11 @@
 ﻿/*Author: Tobias Zimmerlin
  * 30.01.2015
  * V1
- * 
+ *
  */
 
 #if UNITY_EDITOR
+
 using UnityEngine;
 using UnityEditor;
 using System.Reflection;
@@ -31,27 +32,35 @@ namespace SimpleLibrary
                     case Timer.TimerType.CONST:
                         lineCount += 1;
                         break;
+
                     case Timer.TimerType.LERP_TWO_CONSTANTS:
                         lineCount += 4;
                         break;
+
                     case Timer.TimerType.RANDOM_TWO_CONSTANTS:
                         lineCount += 3;
                         break;
+
                     case Timer.TimerType.LERP_RANDOM_FOUR_CONSTANTS:
                         lineCount += 6;
                         break;
+
                     case Timer.TimerType.LERP_CURVE:
                         lineCount += 4;
                         break;
+
                     case Timer.TimerType.RANDOM_CURVE:
                         lineCount += 3;
                         break;
+
                     case Timer.TimerType.RANDOM_TWO_CURVES:
                         lineCount += 4;
                         break;
+
                     case Timer.TimerType.LERP_RANDOM_TWO_CURVES:
                         lineCount += 5;
                         break;
+
                     default:
                         break;
                 }
@@ -63,7 +72,7 @@ namespace SimpleLibrary
         public override void OnGUI(Rect rect, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(rect, label, property);
-            
+
             SerializedProperty Foldout = property.FindPropertyRelative("Foldout");
             SerializedProperty LerpValue = property.FindPropertyRelative("LerpValue");
 
@@ -87,7 +96,6 @@ namespace SimpleLibrary
                 procentage = Mathf.Clamp01(timer.floatValue / CurrentTimeValue.floatValue);
 
             int indent = EditorGUI.indentLevel;
-            EditorGUI.indentLevel = 0;
 
             string foldOutLabel = string.Format("{0}", label.text);
 
@@ -129,17 +137,20 @@ namespace SimpleLibrary
                     case Timer.TimerType.CONST:
                         EditorGUI.PropertyField(rect2, Time1);
                         break;
+
                     case Timer.TimerType.LERP_TWO_CONSTANTS:
                         EditorGUI.PropertyField(rect2, Time1, new GUIContent("MinValue"));
                         EditorGUI.PropertyField(rect3, Time2, new GUIContent("MaxValue"));
                         EditorGUI.Slider(rect4, LerpValue, 0f, 1f, new GUIContent("Test LerpValue"));
                         EditorGUI.LabelField(rect5, new GUIContent(string.Format("Expected Timer Value: {0:0.###}", Mathf.Lerp(Time1.floatValue, Time2.floatValue, LerpValue.floatValue))));
                         break;
+
                     case Timer.TimerType.RANDOM_TWO_CONSTANTS:
                         EditorGUI.PropertyField(rect2, Time1);
                         EditorGUI.PropertyField(rect3, Time2);
                         EditorGUI.LabelField(rect4, new GUIContent(string.Format("Expected Timer Value Between: {0:0.###} => {1:0.###}", Time1.floatValue, Time2.floatValue)));
                         break;
+
                     case Timer.TimerType.LERP_RANDOM_FOUR_CONSTANTS:
                         EditorGUI.PropertyField(rect2, Time1, new GUIContent("MinValue1"));
                         EditorGUI.PropertyField(rect3, Time2, new GUIContent("MinValue2"));
@@ -148,6 +159,7 @@ namespace SimpleLibrary
                         EditorGUI.Slider(rect6, LerpValue, 0f, 1f, new GUIContent("Test LerpValue"));
                         EditorGUI.LabelField(rect7, new GUIContent(string.Format("Expected Timer Value Between: {0:0.###} => {1:0.###}", Mathf.Lerp(Time1.floatValue, Time2.floatValue, LerpValue.floatValue), Mathf.Lerp(Time3.floatValue, Time4.floatValue, LerpValue.floatValue))));
                         break;
+
                     case Timer.TimerType.LERP_CURVE:
                         EditorGUI.PropertyField(rect2, Curve1);
                         EditorGUI.PropertyField(rect3, ValueMultiplier);
@@ -161,6 +173,7 @@ namespace SimpleLibrary
                         }
                         EditorGUI.LabelField(rect5, new GUIContent(string.Format("Expected Timer Value: {0:0.###}", value1)));
                         break;
+
                     case Timer.TimerType.RANDOM_CURVE:
                         EditorGUI.PropertyField(rect2, Curve1);
                         EditorGUI.PropertyField(rect3, ValueMultiplier);
@@ -175,6 +188,7 @@ namespace SimpleLibrary
                         }
                         EditorGUI.LabelField(rect4, new GUIContent(string.Format("Expected Timer Value Between: {0:0.###} => {1:0.###}", value1, value2)));
                         break;
+
                     case Timer.TimerType.LERP_RANDOM_TWO_CURVES:
                         EditorGUI.PropertyField(rect2, Curve1);
                         EditorGUI.PropertyField(rect3, Curve2);
@@ -210,6 +224,7 @@ namespace SimpleLibrary
                         }
                         EditorGUI.LabelField(rect6, new GUIContent(string.Format("Expected Timer Value Between: {0:0.###} => {1:0.###}", value1, value2)));
                         break;
+
                     case Timer.TimerType.RANDOM_TWO_CURVES:
                         EditorGUI.PropertyField(rect2, Curve1);
                         EditorGUI.PropertyField(rect3, Curve2);
@@ -245,6 +260,7 @@ namespace SimpleLibrary
                         }
                         EditorGUI.LabelField(rect5, new GUIContent(string.Format("Expected Timer Value Between: {0:0.###} => {1:0.###}", value1, value2)));
                         break;
+
                     default:
                         break;
                 }
@@ -256,4 +272,5 @@ namespace SimpleLibrary
         }
     }
 }
+
 #endif

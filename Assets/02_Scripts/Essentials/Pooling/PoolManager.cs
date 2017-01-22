@@ -95,7 +95,10 @@ public class PoolManager : SimpleMVCSAutoCreateSingleton<PoolManager>
     public GameObject SpawnOrCreateObject(GameObject prefab)
     {
         if (!HasPool(prefab))
-            return null;
+        {
+            var go = Instantiate<GameObject>(prefab);
+            return go;
+        }
         return GetPoolInfo(prefab).CreateInstance();
     }
 }
