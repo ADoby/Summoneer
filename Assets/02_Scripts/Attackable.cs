@@ -1,72 +1,8 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Attackable : SpriteHolder
+public class Attackable : Moveable
 {
-    [ReadOnly]
-    public Owner Owner;
-
-    [SerializeField]
-    private Animator animator;
-
-    public virtual Animator Animator
-    {
-        get
-        {
-            return animator;
-        }
-    }
-
-    [SerializeField]
-    [ReadOnly]
-    private new Rigidbody2D rigidbody;
-
-    public virtual Rigidbody2D Rigidbody
-
-    {
-        get
-        {
-            return rigidbody;
-        }
-    }
-
-    public Vector2 Position
-    {
-        get
-        {
-            if (Rigidbody)
-                return Rigidbody.position;
-            return transform.position;
-        }
-        set
-        {
-            if (Rigidbody)
-                Rigidbody.position = value;
-            transform.position = value;
-        }
-    }
-
-    public Vector2 Velocity
-    {
-        get
-        {
-            if (Rigidbody)
-                return Rigidbody.velocity;
-            return Vector2.zero;
-        }
-        set
-        {
-            if (Rigidbody)
-                Rigidbody.velocity = value;
-        }
-    }
-
-    public void AddForce(Vector2 force, ForceMode2D mode = ForceMode2D.Force)
-    {
-        if (Rigidbody != null)
-            Rigidbody.AddForce(force, mode);
-    }
-
     [SerializeField]
     private float baseHealth = 100f;
 
@@ -75,72 +11,6 @@ public class Attackable : SpriteHolder
         get
         {
             return baseHealth;
-        }
-    }
-
-    [SerializeField]
-    private new BoxCollider2D collider;
-
-    public virtual BoxCollider2D Collider
-
-    {
-        get
-        {
-            return collider;
-        }
-    }
-
-    [SerializeField]
-    private Transform body;
-
-    public virtual Transform Body
-    {
-        get
-        {
-            return body;
-        }
-    }
-
-    [SerializeField]
-    private float bodyCenterYDiff;
-
-    public virtual float BodyCenterYDiff
-    {
-        get
-        {
-            return bodyCenterYDiff;
-        }
-    }
-
-    public virtual Vector3 BodyCenter
-    {
-        get
-        {
-            if (Collider != null)
-            {
-                return body.TransformPoint(Collider.offset);
-            }
-            return body.position;
-        }
-    }
-
-    public virtual float SizeX
-    {
-        get
-        {
-            if (Collider == null)
-                return 0f;
-            return Collider.size.x;
-        }
-    }
-
-    public virtual float SizeY
-    {
-        get
-        {
-            if (Collider == null)
-                return 0f;
-            return Collider.size.y;
         }
     }
 
@@ -204,31 +74,7 @@ public class Attackable : SpriteHolder
         }
     }
 
-    protected override void Awake()
-    {
-        base.Awake();
-        Init();
-        Reset();
-    }
-
-    private bool initialized = false;
-
-    protected virtual void Init()
-    {
-        if (initialized)
-            return;
-        initialized = true;
-        if (animator == null) animator = GetComponent<Animator>();
-        rigidbody = GetComponent<Rigidbody2D>();
-    }
-
-    protected override void DoUpdate()
-    {
-        base.DoUpdate();
-        UpdateAnimator();
-    }
-
-    protected virtual void UpdateAnimator()
+    protected override void UpdateAnimator()
     {
         if (Animator != null && Animator.isInitialized)
         {
@@ -237,21 +83,10 @@ public class Attackable : SpriteHolder
         }
     }
 
-    protected virtual void Reset()
+    protected override void Reset()
     {
         Health = MaxHealth;
-        UpdateAnimator();
-    }
-
-    public override void OnSpawn()
-    {
-        base.OnSpawn();
-        Reset();
-    }
-
-    public override void OnDespawn()
-    {
-        base.OnDespawn();
+        base.Reset();
     }
 
     public virtual float Damage(float amount, Owner attacker)

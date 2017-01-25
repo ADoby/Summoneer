@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : PooledBehaviour
+public class Projectile : Moveable
 {
     public float Damage = 0f;
 
-    public float Speed = 10f;
     public float StartForce = 1f;
     public float RotateSpeed = 5f;
 
@@ -19,30 +18,15 @@ public class Projectile : PooledBehaviour
     [ReadOnly]
     public bool isAlive = true;
 
-    public Animator Animator;
-
     [ReadOnly]
     public Attackable Target;
 
     [ReadOnly]
     public Attacker Sender;
 
-    [ReadOnly]
-    public Owner Owner;
-
-    protected Rigidbody2D rigid;
-
     private List<Attackable> attackables = new List<Attackable>();
     private Attackable attackable;
     private AttackableCollider attackableCollider;
-
-    protected virtual Vector3 BodyCenter
-    {
-        get
-        {
-            return transform.position;
-        }
-    }
 
     protected virtual Vector3 Direction
     {
@@ -64,7 +48,7 @@ public class Projectile : PooledBehaviour
         Owner = owner;
         Target = target;
         Sender = attacker;
-        rigid.AddForce(Direction.normalized * StartForce, ForceMode2D.Impulse);
+        AddForce(Direction.normalized * StartForce, ForceMode2D.Impulse);
         float rot_z = Mathf.Atan2(Direction.normalized.y, Direction.normalized.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
     }
@@ -74,30 +58,16 @@ public class Projectile : PooledBehaviour
         base.OnSpawn();
 
         isAlive = true;
-        UpdateView.OnUpdate += DoFixedUpdate;
     }
 
-    public override void OnDespawn()
+    public override void DoUpdate()
     {
-        base.OnDespawn();
-        UpdateView.OnFixedUpdate -= DoFixedUpdate;
-    }
-
-    protected override void Awake()
-    {
-        base.Awake();
-
-        if (Animator == null) Animator = GetComponent<Animator>();
-        rigid = GetComponent<Rigidbody2D>();
-    }
-
-    protected virtual void DoFixedUpdate()
-    {
+        base.DoUpdate();
         if (!isAlive)
             return;
         if (Target != null)
         {
-            rigid.AddForce(transform.up * Speed);
+            AddForce(transform.up * Speed);
             if (RotateTowards)
             {
                 float rot_z = Mathf.Atan2(Direction.normalized.y, Direction.normalized.x) * Mathf.Rad2Deg;
@@ -117,7 +87,7 @@ public class Projectile : PooledBehaviour
     {
         if (!isAlive)
             return;
-        rigid.velocity = Vector2.zero;
+        Velocity = Vector2.zero;
         isAlive = false;
 
         if (Owner == null)
@@ -129,7 +99,7 @@ public class Projectile : PooledBehaviour
         if (ExplosionRange > 0)
         {
             attackables.Clear();
-            Collider2D[] targets = Physics2D.OverlapCircleAll(rigid.position, ExplosionRange);
+            Collider2D[] targets = Physics2D.OverlapCircleAll(Position, ExplosionRange);
 
             for (int i = 0; i < targets.Length; i++)
             {
@@ -168,7 +138,7 @@ public class Projectile : PooledBehaviour
 
         Owner.DoDamageToTarget(target, Damage, Sender);
 
-        Vector2 force = (target.Position - rigid.position);
+        Vector2 force = (target.Position - Position);
         force *= (ExplosionRange - force.magnitude); //Reverse force magnitude (closer = bigger force)
         force *= ExplosionForce;
         if (force.magnitude < 0) //don't suck things in

@@ -6,165 +6,164 @@ using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager>
 {
-	public GameObject SoulPrefab;
-	public float SoulSpeed = 5f;
-	public List<ContainerSpawner> ContainerSpawner = new List<ContainerSpawner>();
-	public List<KISpawner> KISpawner = new List<KISpawner>();
+    public GameObject SoulPrefab;
+    public float SoulSpeed = 5f;
+    public List<ContainerSpawner> ContainerSpawner = new List<ContainerSpawner>();
+    public List<KISpawner> KISpawner = new List<KISpawner>();
 
-	public List<Player> RegisteredPlayers = new List<Player>();
-	public List<Owner> RegisteredOwners = new List<Owner>();
+    public List<Player> RegisteredPlayers = new List<Player>();
+    public List<Owner> RegisteredOwners = new List<Owner>();
 
-	public ExperienceInfo ExperienceInfo;
+    public ExperienceInfo ExperienceInfo;
 
-	private float CalculateExp(float value, float mult, float strength, float otherStrength)
-	{
-		value = (value * mult);
-		value = value + value * (otherStrength - strength) * ExperienceInfo.EnemyStrengthExperienceMultiplier;
-		return Mathf.Max(value, 0f);
-	}
+    private float CalculateExp(float value, float mult, float strength, float otherStrength)
+    {
+        value = (value * mult);
+        value = value + value * (otherStrength - strength) * ExperienceInfo.EnemyStrengthExperienceMultiplier;
+        return Mathf.Max(value, 0f);
+    }
 
-	public float CalculateDamageDoneExp(float damage, float myStrength, float enemyStrength)
-	{
-		return CalculateExp(damage, ExperienceInfo.DamageDoneToExperience, myStrength, enemyStrength);
-	}
+    public float CalculateDamageDoneExp(float damage, float myStrength, float enemyStrength)
+    {
+        return CalculateExp(damage, ExperienceInfo.DamageDoneToExperience, myStrength, enemyStrength);
+    }
 
-	public float CalculateDamageSurvivedExp(float damage, float myStrength, float enemyStrength)
-	{
-		return CalculateExp(damage, ExperienceInfo.DamageSurvivedToExperience, myStrength, enemyStrength);
-	}
+    public float CalculateDamageSurvivedExp(float damage, float myStrength, float enemyStrength)
+    {
+        return CalculateExp(damage, ExperienceInfo.DamageSurvivedToExperience, myStrength, enemyStrength);
+    }
 
-	public float CalculateEnemyKilledExp(float myStrength, float enemyStrength)
-	{
-		return CalculateExp(ExperienceInfo.EnemeyKilledBaseExperience, ExperienceInfo.EnemyKilledExperience, myStrength, enemyStrength);
-	}
+    public float CalculateEnemyKilledExp(float myStrength, float enemyStrength)
+    {
+        return CalculateExp(ExperienceInfo.EnemeyKilledBaseExperience, ExperienceInfo.EnemyKilledExperience, myStrength, enemyStrength);
+    }
 
-	public bool CanAttack(Attacker attacker, Attackable other)
-	{
-		diff = other.BodyCenter - attacker.BodyCenter;
-		diff.x -= other.SizeX * 0.5f - attacker.SizeX * 0.5f;
-		diff.y -= other.SizeY * 0.5f - attacker.SizeY * 0.5f;
-		return Mathf.Abs(diff.x) < attacker.AttackRangeX && Mathf.Abs(diff.y) < attacker.AttackRangeY;
-	}
+    public bool CanAttack(Attacker attacker, Attackable other)
+    {
+        diff = other.BodyCenter - attacker.BodyCenter;
+        diff.x -= other.SizeX * 0.5f - attacker.SizeX * 0.5f;
+        diff.y -= other.SizeY * 0.5f - attacker.SizeY * 0.5f;
+        return Mathf.Abs(diff.x) < attacker.AttackRangeX && Mathf.Abs(diff.y) < attacker.AttackRangeY;
+    }
 
-	private Vector3 diff;
-	public float CurrentDifficulty = 0f;
-	public float DifficultyPerSecond = 0.1f;
+    private Vector3 bottomLeft = Vector3.zero;
+    private Vector3 topLeft = Vector3.zero;
+    private Vector3 topRight = Vector3.zero;
+    private Vector3 bottomRight = Vector3.zero;
 
-	public Rect level = new Rect(-25, -25, 50, 50);
+    private float delta = 0f;
+    private int i;
+    private Vector3 diff;
+    public float CurrentDifficulty = 0f;
+    public float DifficultyPerSecond = 0.1f;
 
-	public List<EnemyDifficultySetting> MinionDifficultySettings = new List<EnemyDifficultySetting>();
-	public List<ContainerDifficultySetting> ContainerDifficultySettings = new List<ContainerDifficultySetting>();
+    public Rect level = new Rect(-25, -25, 50, 50);
 
-	public Text Difficulty;
-	public Text FPS;
+    public List<EnemyDifficultySetting> MinionDifficultySettings = new List<EnemyDifficultySetting>();
+    public List<ContainerDifficultySetting> ContainerDifficultySettings = new List<ContainerDifficultySetting>();
 
-	[Range(0.1f, 4f)]
-	public float GameSpeed = 1f;
+    public Text Difficulty;
+    public Text FPS;
 
-	public void RegisterPlayer(Player player)
-	{
-		RegisterOwner(player);
-		if (RegisteredPlayers.Contains(player))
-			return;
-		RegisteredPlayers.Add(player);
-	}
+    [Range(0.1f, 4f)]
+    public float GameSpeed = 1f;
 
-	public void RegisterOwner(Owner owner)
-	{
-		if (!RegisteredOwners.Contains(owner))
-			RegisteredOwners.Add(owner);
-	}
+    public void RegisterPlayer(Player player)
+    {
+        RegisterOwner(player);
+        if (RegisteredPlayers.Contains(player))
+            return;
+        RegisteredPlayers.Add(player);
+    }
 
-	public void UnregisterOwner(Owner owner)
-	{
-		if (RegisteredOwners.Contains(owner))
-			RegisteredOwners.Remove(owner);
-	}
+    public void RegisterOwner(Owner owner)
+    {
+        if (!RegisteredOwners.Contains(owner))
+            RegisteredOwners.Add(owner);
+    }
 
-	public Vector3[] GetAllPlayerPositions()
-	{
-		Vector3[] positions = new Vector3[RegisteredPlayers.Count];
-		for (int i = 0; i < RegisteredPlayers.Count; i++)
-		{
-			positions[i] = RegisteredPlayers[i].transform.position;
-		}
-		return positions;
-	}
+    public void UnregisterOwner(Owner owner)
+    {
+        if (RegisteredOwners.Contains(owner))
+            RegisteredOwners.Remove(owner);
+    }
 
-	public Rect GetCurrentLevelRect()
-	{
-		return level;
-	}
+    public Vector3[] GetAllPlayerPositions()
+    {
+        Vector3[] positions = new Vector3[RegisteredPlayers.Count];
+        for (int i = 0; i < RegisteredPlayers.Count; i++)
+        {
+            positions[i] = RegisteredPlayers[i].transform.position;
+        }
+        return positions;
+    }
 
-	public bool InRecruitRange(Owner owner, Minion minion)
-	{
-		Vector3 diff = owner.MinionCenter - minion.transform.position;
+    public Rect GetCurrentLevelRect()
+    {
+        return level;
+    }
 
-		return diff.magnitude < 10f;
-	}
+    public bool InRecruitRange(Owner owner, Minion minion)
+    {
+        diff = owner.MinionCenter - minion.transform.position;
 
-	private void StartGame()
-	{
-		for (int i = 0; i < ContainerSpawner.Count; i++)
-		{
-			ContainerSpawner[i].Start();
-		}
-		for (int i = 0; i < KISpawner.Count; i++)
-		{
-			KISpawner[i].Start();
-		}
-	}
+        return diff.magnitude < 10f;
+    }
 
-	private Vector3 bottomLeft = Vector3.zero;
-	private Vector3 topLeft = Vector3.zero;
-	private Vector3 topRight = Vector3.zero;
-	private Vector3 bottomRight = Vector3.zero;
+    private void StartGame()
+    {
+        for (int i = 0; i < ContainerSpawner.Count; i++)
+        {
+            ContainerSpawner[i].Start();
+        }
+        for (int i = 0; i < KISpawner.Count; i++)
+        {
+            KISpawner[i].Start();
+        }
+    }
 
-	private float delta = 0f;
-	private int i;
+    private void UpdateGame()
+    {
+        if (Input.GetButtonDown("Escape"))
+            Application.Quit();
+        Time.timeScale = GameSpeed;
 
-	private void UpdateGame()
-	{
-		if (Input.GetButtonDown("Escape"))
-			Application.Quit();
-		Time.timeScale = GameSpeed;
+        delta = (delta + Time.deltaTime) / 2f;
 
-		delta = (delta + Time.deltaTime) / 2f;
+        FPS.text = string.Format("FPS ({0:0.000}):{1:0000}", delta, 1f / delta);
 
-		FPS.text = string.Format("FPS ({0:0.000}):{1:0000}", delta, 1f / delta);
+        CurrentDifficulty += DifficultyPerSecond * Time.deltaTime;
+        Difficulty.text = string.Format("Difficulty:{0:0.0}", CurrentDifficulty);
+        for (i = 0; i < ContainerSpawner.Count; i++)
+        {
+            ContainerSpawner[i].Update(CurrentDifficulty);
+        }
+        for (i = 0; i < KISpawner.Count; i++)
+        {
+            KISpawner[i].Update(CurrentDifficulty);
+        }
 
-		CurrentDifficulty += DifficultyPerSecond * Time.deltaTime;
-		Difficulty.text = string.Format("Difficulty:{0:0.0}", CurrentDifficulty);
-		for (i = 0; i < ContainerSpawner.Count; i++)
-		{
-			ContainerSpawner[i].Update(CurrentDifficulty);
-		}
-		for (i = 0; i < KISpawner.Count; i++)
-		{
-			KISpawner[i].Update(CurrentDifficulty);
-		}
+        bottomLeft.x = level.xMin;
+        bottomLeft.y = level.yMin;
+        topLeft.x = level.xMin;
+        topLeft.y = level.yMax;
+        topRight.x = level.xMax;
+        topRight.y = level.yMax;
+        bottomRight.x = level.xMax;
+        bottomRight.y = level.yMin;
+        //Debug.DrawLine(bottomLeft, topLeft);
+        //Debug.DrawLine(topLeft, topRight);
+        //Debug.DrawLine(topRight, bottomRight);
+        //Debug.DrawLine(bottomRight, bottomLeft);
+    }
 
-		bottomLeft.x = level.xMin;
-		bottomLeft.y = level.yMin;
-		topLeft.x = level.xMin;
-		topLeft.y = level.yMax;
-		topRight.x = level.xMax;
-		topRight.y = level.yMax;
-		bottomRight.x = level.xMax;
-		bottomRight.y = level.yMin;
-		Debug.DrawLine(bottomLeft, topLeft);
-		Debug.DrawLine(topLeft, topRight);
-		Debug.DrawLine(topRight, bottomRight);
-		Debug.DrawLine(bottomRight, bottomLeft);
-	}
+    private void Start()
+    {
+        StartGame();
+    }
 
-	private void Start()
-	{
-		StartGame();
-	}
-
-	private void Update()
-	{
-		UpdateGame();
-	}
+    private void Update()
+    {
+        UpdateGame();
+    }
 }

@@ -57,12 +57,12 @@ TextureImporter:
     21300100: Feurantos_Sprite_2
     21300102: Feurantos_Sprite_3
     21300104: Feurantos_Sprite_4
-  serializedVersion: 2
+  serializedVersion: 4
   mipmaps:
     mipMapMode: 0
     enableMipMap: 1
+    sRGBTexture: 1
     linearTexture: 0
-    correctGamma: 0
     fadeOut: 0
     borderMipMap: 0
     mipMapFadeDistanceStart: 1
@@ -74,10 +74,8 @@ TextureImporter:
     normalMapFilter: 0
   isReadable: 0
   grayScaleToAlpha: 0
-  generateCubemap: 0
+  generateCubemap: 6
   cubemapConvolution: 0
-  cubemapConvolutionSteps: 8
-  cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -3
   maxTextureSize: 2048
@@ -88,9 +86,7 @@ TextureImporter:
     wrapMode: 1
   nPOTScale: 0
   lightmap: 0
-  rGBM: 0
   compressionQuality: 50
-  allowsAlphaSplitting: 0
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
@@ -98,12 +94,52 @@ TextureImporter:
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 64
+  alphaUsage: 1
   alphaIsTransparency: 1
+  spriteTessellationDetail: -1
   textureType: 8
-  buildTargetSettings: []
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: iPhone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
   spriteSheet:
+    serializedVersion: 2
     sprites:
-    - name: Fury_Arms
+    - serializedVersion: 2
+      name: Fury_Arms
       rect:
         serializedVersion: 2
         x: 21
@@ -114,7 +150,9 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Fury_Body
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Fury_Body
       rect:
         serializedVersion: 2
         x: 24
@@ -125,7 +163,9 @@ TextureImporter:
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Fury_Food_1
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Fury_Food_1
       rect:
         serializedVersion: 2
         x: 24
@@ -136,7 +176,9 @@ TextureImporter:
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Fury_Food_2
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Fury_Food_2
       rect:
         serializedVersion: 2
         x: 37
@@ -147,7 +189,9 @@ TextureImporter:
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Furios_Arms
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Furios_Arms
       rect:
         serializedVersion: 2
         x: 79
@@ -158,7 +202,9 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Farios_Head
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Farios_Head
       rect:
         serializedVersion: 2
         x: 84
@@ -169,7 +215,9 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Furios_Body
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Furios_Body
       rect:
         serializedVersion: 2
         x: 84
@@ -180,7 +228,9 @@ TextureImporter:
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Furios_Food_1
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Furios_Food_1
       rect:
         serializedVersion: 2
         x: 84
@@ -191,7 +241,9 @@ TextureImporter:
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Furios_Food_2
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Furios_Food_2
       rect:
         serializedVersion: 2
         x: 103
@@ -202,7 +254,9 @@ TextureImporter:
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Furoon_Arms
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Furoon_Arms
       rect:
         serializedVersion: 2
         x: 7
@@ -213,7 +267,9 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Furoon_Head
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Furoon_Head
       rect:
         serializedVersion: 2
         x: 18
@@ -224,7 +280,9 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Furoon_Body
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Furoon_Body
       rect:
         serializedVersion: 2
         x: 18
@@ -235,7 +293,9 @@ TextureImporter:
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Furoon_Food_1
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Furoon_Food_1
       rect:
         serializedVersion: 2
         x: 18
@@ -246,7 +306,9 @@ TextureImporter:
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Minions_Food_2
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Minions_Food_2
       rect:
         serializedVersion: 2
         x: 40
@@ -257,7 +319,9 @@ TextureImporter:
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Furygantos_Head
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Furygantos_Head
       rect:
         serializedVersion: 2
         x: 164
@@ -267,13 +331,10 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -28, y: 28}
-        - {x: -28, y: -28}
-        - {x: 26, y: -28}
-        - {x: 28, y: -25}
-        - {x: 28, y: 28}
-    - name: Furygantos_Arms
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Furygantos_Arms
       rect:
         serializedVersion: 2
         x: 142
@@ -284,7 +345,9 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Furygantos_Body
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Furygantos_Body
       rect:
         serializedVersion: 2
         x: 164
@@ -294,12 +357,10 @@ TextureImporter:
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -28, y: 41}
-        - {x: -28, y: 0}
-        - {x: 28, y: 0}
-        - {x: 28, y: 41}
-    - name: Furygantos_Food_1
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Furygantos_Food_1
       rect:
         serializedVersion: 2
         x: 164
@@ -310,7 +371,9 @@ TextureImporter:
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Furygantos_Food_2
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Furygantos_Food_2
       rect:
         serializedVersion: 2
         x: 198
@@ -321,7 +384,9 @@ TextureImporter:
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Feury_Ball
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feury_Ball
       rect:
         serializedVersion: 2
         x: 322
@@ -331,16 +396,10 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -15, y: 18}
-        - {x: -18, y: 17}
-        - {x: -18, y: -15}
-        - {x: -17, y: -18}
-        - {x: 14, y: -18}
-        - {x: 18, y: -13}
-        - {x: 18, y: 14}
-        - {x: 13, y: 18}
-    - name: Fury_Explosion
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Fury_Explosion
       rect:
         serializedVersion: 2
         x: 382
@@ -350,65 +409,10 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.4980573, y: 0.4653663}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 13.147644, y: 43.30533}
-        - {x: -21.852356, y: 43.30533}
-        - {x: -33.852356, y: 26.305328}
-        - {x: -33.852356, y: -19.694672}
-        - {x: -23.852356, y: -37.69467}
-        - {x: 36.147644, y: -37.69467}
-        - {x: 37.147644, y: -31.694672}
-        - {x: 37.147644, y: 14.305328}
-        - {x: 30.147644, y: 33.30533}
-      - - {x: -29.852356, y: -28.694672}
-        - {x: -21.852356, y: -28.694672}
-        - {x: -21.852356, y: -19.694672}
-        - {x: -29.852356, y: -19.694672}
-      - - {x: 33.147644, y: -10.694672}
-        - {x: 31.147644, y: -12.694672}
-        - {x: 31.147644, y: -16.694672}
-        - {x: 33.147644, y: -18.694672}
-        - {x: 36.147644, y: -18.694672}
-        - {x: 38.147644, y: -16.694672}
-        - {x: 38.147644, y: -12.694672}
-        - {x: 36.147644, y: -10.694672}
-      - - {x: -36.852356, y: -2.6946716}
-        - {x: -37.852356, y: -3.6946716}
-        - {x: -37.852356, y: -7.6946716}
-        - {x: -36.852356, y: -8.694672}
-        - {x: -32.852356, y: -8.694672}
-        - {x: -30.852356, y: -6.6946716}
-        - {x: -30.852356, y: -4.6946716}
-        - {x: -32.852356, y: -2.6946716}
-      - - {x: 24.147644, y: 21.305328}
-        - {x: 24.147644, y: 12.305328}
-        - {x: 33.147644, y: 12.305328}
-        - {x: 33.147644, y: 21.305328}
-      - - {x: 35.147644, y: 22.305328}
-        - {x: 33.147644, y: 20.305328}
-        - {x: 33.147644, y: 17.305328}
-        - {x: 35.147644, y: 15.305328}
-        - {x: 37.147644, y: 15.305328}
-        - {x: 38.147644, y: 16.305328}
-        - {x: 38.147644, y: 21.305328}
-        - {x: 37.147644, y: 22.305328}
-      - - {x: -20.852356, y: 35.30533}
-        - {x: -22.852356, y: 33.30533}
-        - {x: -22.852356, y: 30.305328}
-        - {x: -20.852356, y: 28.305328}
-        - {x: -17.852356, y: 28.305328}
-        - {x: -15.852356, y: 30.305328}
-        - {x: -15.852356, y: 33.30533}
-        - {x: -17.852356, y: 35.30533}
-      - - {x: 16.147644, y: 38.30533}
-        - {x: 14.147644, y: 36.30533}
-        - {x: 14.147644, y: 33.30533}
-        - {x: 16.147644, y: 31.305328}
-        - {x: 19.147644, y: 31.305328}
-        - {x: 21.147644, y: 33.30533}
-        - {x: 21.147644, y: 36.30533}
-        - {x: 19.147644, y: 38.30533}
-    - name: Feury_Ball_Fire1
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feury_Ball_Fire1
       rect:
         serializedVersion: 2
         x: 314
@@ -419,7 +423,9 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Feury_Ball_Fire2
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feury_Ball_Fire2
       rect:
         serializedVersion: 2
         x: 328
@@ -430,7 +436,9 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Feury_Ball_Fire3
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feury_Ball_Fire3
       rect:
         serializedVersion: 2
         x: 344
@@ -441,7 +449,9 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Feury_Ball_Fire4
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feury_Ball_Fire4
       rect:
         serializedVersion: 2
         x: 358
@@ -452,7 +462,9 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Feury
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feury
       rect:
         serializedVersion: 2
         x: 31
@@ -463,7 +475,9 @@ TextureImporter:
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Feuros_Body
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feuros_Body
       rect:
         serializedVersion: 2
         x: 87
@@ -473,18 +487,10 @@ TextureImporter:
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -4.5, y: 51}
-        - {x: -17.5, y: 45}
-        - {x: -20.5, y: 37}
-        - {x: -20.5, y: 5}
-        - {x: -19.5, y: 1}
-        - {x: -16.5, y: 0}
-        - {x: 17.5, y: 0}
-        - {x: 20.5, y: 2}
-        - {x: 20.5, y: 42}
-        - {x: 9.5, y: 51}
-    - name: Feuros_Arm_Left
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feuros_Arm_Left
       rect:
         serializedVersion: 2
         x: 84
@@ -495,7 +501,9 @@ TextureImporter:
       pivot: {x: 1, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Feuros_Arm_Right
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feuros_Arm_Right
       rect:
         serializedVersion: 2
         x: 124
@@ -506,7 +514,9 @@ TextureImporter:
       pivot: {x: 0, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Feury_Small1
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feury_Small1
       rect:
         serializedVersion: 2
         x: 61
@@ -517,7 +527,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Feury_Small2
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feury_Small2
       rect:
         serializedVersion: 2
         x: 65
@@ -528,7 +540,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Feury_Small3
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feury_Small3
       rect:
         serializedVersion: 2
         x: 69
@@ -539,7 +553,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Feuros_Small_1
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feuros_Small_1
       rect:
         serializedVersion: 2
         x: 131
@@ -550,7 +566,9 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Feuros_Small_2
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feuros_Small_2
       rect:
         serializedVersion: 2
         x: 137
@@ -561,7 +579,9 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Feuros_small_3
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feuros_small_3
       rect:
         serializedVersion: 2
         x: 145
@@ -572,7 +592,9 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Feuros_small_4
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feuros_small_4
       rect:
         serializedVersion: 2
         x: 154
@@ -583,7 +605,9 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Feuroon_Body
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feuroon_Body
       rect:
         serializedVersion: 2
         x: 179
@@ -593,22 +617,10 @@ TextureImporter:
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 20, y: 71}
-        - {x: 14, y: 59}
-        - {x: 12, y: 72}
-        - {x: 4, y: 91}
-        - {x: 1, y: 91}
-        - {x: 0, y: 90}
-        - {x: -28, y: 73}
-        - {x: -34, y: 45}
-        - {x: -34, y: 12}
-        - {x: -21, y: 0}
-        - {x: 21, y: 0}
-        - {x: 34, y: 4}
-        - {x: 34, y: 49}
-        - {x: 24, y: 68}
-    - name: Arm_left
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Arm_left
       rect:
         serializedVersion: 2
         x: 156
@@ -618,26 +630,10 @@ TextureImporter:
       alignment: 8
       pivot: {x: 1, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -37, y: 36}
-        - {x: -37, y: 18}
-        - {x: -35, y: 11}
-        - {x: -24, y: 0}
-        - {x: 0, y: 0}
-        - {x: 0, y: 8}
-        - {x: -22, y: 36}
-      - - {x: -24, y: 32}
-        - {x: -22, y: 30}
-        - {x: -19, y: 31}
-        - {x: -19, y: 34}
-        - {x: -21, y: 36}
-        - {x: -24, y: 35}
-      - - {x: -29, y: 35}
-        - {x: -26, y: 37}
-        - {x: -28, y: 46}
-        - {x: -33, y: 46}
-        - {x: -33, y: 40}
-    - name: Arm_right
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Arm_right
       rect:
         serializedVersion: 2
         x: 239
@@ -647,15 +643,10 @@ TextureImporter:
       alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 35, y: 36}
-        - {x: 16, y: 36}
-        - {x: 0, y: 11}
-        - {x: 0, y: 0}
-        - {x: 22, y: 0}
-        - {x: 32, y: 10}
-        - {x: 35, y: 29}
-    - name: Feurantos_head
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feurantos_head
       rect:
         serializedVersion: 2
         x: 31
@@ -665,27 +656,10 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.5438804, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 26.384491, y: 53}
-        - {x: 26.384491, y: 47}
-        - {x: 27.384491, y: 41}
-        - {x: 27.384491, y: 39}
-        - {x: 28.384491, y: 37}
-        - {x: 27.384491, y: 34}
-        - {x: 27.384491, y: 40}
-        - {x: 25.384491, y: 50}
-        - {x: 28.384491, y: 73}
-        - {x: 14.384491, y: 95}
-        - {x: -8.615509, y: 95}
-        - {x: -38.61551, y: 57}
-        - {x: -38.61551, y: 15}
-        - {x: -20.615509, y: 0}
-        - {x: 19.384491, y: 0}
-        - {x: 27.384491, y: 2}
-        - {x: 32.38449, y: 13}
-        - {x: 32.38449, y: 57}
-        - {x: 28.384491, y: 57}
-    - name: Feurantos_HeadSprite_1
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feurantos_HeadSprite_1
       rect:
         serializedVersion: 2
         x: 175
@@ -696,7 +670,9 @@ TextureImporter:
       pivot: {x: 0.3909561, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Feurantos_LeftArm
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feurantos_LeftArm
       rect:
         serializedVersion: 2
         x: 8
@@ -706,15 +682,10 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.9302401, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -39.070084, y: 17}
-        - {x: -38.070084, y: 0}
-        - {x: 2.9299164, y: 0}
-        - {x: 2.9299164, y: 57}
-        - {x: -4.0700836, y: 102}
-        - {x: -35.070084, y: 102}
-        - {x: -39.070084, y: 96}
-    - name: Feurantos_RightArm
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feurantos_RightArm
       rect:
         serializedVersion: 2
         x: 79
@@ -724,15 +695,10 @@ TextureImporter:
       alignment: 9
       pivot: {x: 0.07882591, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 29.7434, y: 99}
-        - {x: -4.2565994, y: 33}
-        - {x: -4.2565994, y: 7}
-        - {x: -2.2565994, y: 0}
-        - {x: 18.7434, y: 0}
-        - {x: 49.7434, y: 29}
-        - {x: 49.7434, y: 99}
-    - name: Feurantos_Headsprite_2
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feurantos_Headsprite_2
       rect:
         serializedVersion: 2
         x: 222
@@ -743,7 +709,9 @@ TextureImporter:
       pivot: {x: 0.7832281, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Feurantos_Headsprite_3
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feurantos_Headsprite_3
       rect:
         serializedVersion: 2
         x: 237
@@ -754,7 +722,9 @@ TextureImporter:
       pivot: {x: 0.09942845, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Feurantos_Body_Middle
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feurantos_Body_Middle
       rect:
         serializedVersion: 2
         x: 194
@@ -765,7 +735,9 @@ TextureImporter:
       pivot: {x: 0.39614812, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Feurantos_Body_Left
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feurantos_Body_Left
       rect:
         serializedVersion: 2
         x: 177
@@ -776,7 +748,9 @@ TextureImporter:
       pivot: {x: 0.8894415, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Feurantos_Body_Right
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feurantos_Body_Right
       rect:
         serializedVersion: 2
         x: 222
@@ -787,7 +761,9 @@ TextureImporter:
       pivot: {x: 0.04683061, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Feurantos_Body_Bottom
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feurantos_Body_Bottom
       rect:
         serializedVersion: 2
         x: 198
@@ -798,7 +774,9 @@ TextureImporter:
       pivot: {x: 0.13221435, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Feurantos_Sprite_1
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feurantos_Sprite_1
       rect:
         serializedVersion: 2
         x: 241
@@ -809,7 +787,9 @@ TextureImporter:
       pivot: {x: 0.018507523, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Feurantos_Sprite_2
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feurantos_Sprite_2
       rect:
         serializedVersion: 2
         x: 213
@@ -820,7 +800,9 @@ TextureImporter:
       pivot: {x: 0.03266716, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Feurantos_Sprite_3
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feurantos_Sprite_3
       rect:
         serializedVersion: 2
         x: 177
@@ -831,7 +813,9 @@ TextureImporter:
       pivot: {x: 0.8504963, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Feurantos_Sprite_4
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Feurantos_Sprite_4
       rect:
         serializedVersion: 2
         x: 169
@@ -842,8 +826,9 @@ TextureImporter:
       pivot: {x: 0.8115489, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      tessellationDetail: -1
     outline: []
-  spritePackingTag: 
+  spritePackingTag: ui
   userData: 
   assetBundleName: 
   assetBundleVariant: 

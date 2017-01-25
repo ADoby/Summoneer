@@ -97,7 +97,7 @@ public class Minion : Attacker
         }
     }
 
-    public float Speed
+    public override float Speed
     {
         get
         {
@@ -105,7 +105,7 @@ public class Minion : Attacker
         }
     }
 
-    public float MaxSpeed
+    public override float MaxSpeed
     {
         get
         {
@@ -258,9 +258,6 @@ public class Minion : Attacker
     public Timer AttackCooldownTimer = new Timer() { Time1 = 0.5f };
 
     [Header("Debug Info")]
-    [ReadOnly]
-    public Vector3 CurrentVelocity;
-
     [ReadOnly]
     public Vector3 TargetPosition;
 
@@ -540,49 +537,6 @@ public class Minion : Attacker
 
     #region Movement
 
-    protected override void Start()
-    {
-        base.Start();
-
-        UpdateView.OnFixedUpdate += DoFixedUpdate;
-    }
-
-    protected override void OnDestroy()
-    {
-        base.OnDestroy();
-
-        UpdateView.OnFixedUpdate -= DoFixedUpdate;
-    }
-
-    protected virtual void DoFixedUpdate()
-    {
-        walkDirection = (TargetPosition - transform.position).normalized;
-        CurrentDistance = Vector3.Distance(TargetPosition, transform.position);
-        ProcentageSpeed = Mathf.Clamp01(CurrentDistance / MaxSpeedDistance);
-        if (Owner != null)
-            ProcentageSpeed *= Owner.WantedSpeed;
-
-        if (IsDead)
-            return;
-        if (Attacking && !MoveWhileActioning)
-            return;
-
-        walkDirection = walkDirection * ProcentageSpeed;
-
-        randomize.x = (Random.value * 2) - 1;
-        randomize.y = (Random.value * 2) - 1;
-        walkDirection += randomize * Randomness;
-
-        if (AnimationCanMove)
-            AddForce(walkDirection * Time.fixedDeltaTime * Speed);
-        CurrentVelocity = Velocity;
-        if (Owner != null)
-            CurrentVelocity = Vector2.ClampMagnitude(CurrentVelocity, MaxSpeed * Owner.WantedSpeed);
-        else
-            CurrentVelocity = Vector2.ClampMagnitude(CurrentVelocity, MaxSpeed);
-        Velocity = CurrentVelocity;
-    }
-
     protected virtual IEnumerator Dodge()
     {
         int currentIndex = 0;
@@ -614,7 +568,7 @@ public class Minion : Attacker
 
     #region Actions
 
-    protected override void DoUpdate()
+    public override void DoUpdate()
     {
         base.DoUpdate();
 
@@ -642,6 +596,33 @@ public class Minion : Attacker
             ResetAction();
         }
         UpdateAction();
+    }
+
+    protected override void UpdateVelocity()
+    {
+        if (IsDead)
+            return;
+        if (Attacking && !MoveWhileActioning)
+            return;
+
+        if (AnimationCanMove)
+        {
+            base.UpdateVelocity();
+
+            walkDirection = (TargetPosition - transform.position);
+            CurrentDistance = walkDirection.magnitude;
+            walkDirection.Normalize();
+
+            ProcentageSpeed = Mathf.Clamp01(CurrentDistance / MaxSpeedDistance);
+            if (Owner != null)
+                ProcentageSpeed *= Owner.WantedSpeed;
+
+            walkDirection = walkDirection * ProcentageSpeed;
+
+            walkDirection.x += ((Random.value * 2) - 1) * Randomness;
+            walkDirection.y += ((Random.value * 2) - 1) * Randomness;
+            AddForce(walkDirection * Time.deltaTime * Speed);
+        }
     }
 
     protected virtual void UpdateThingsNearMe()

@@ -21,14 +21,17 @@ public class SpriteHolder : PooledBehaviour
 
     protected override void Awake()
     {
-        UpdateView.OnUpdate += DoUpdate;
         Do();
     }
 
-    protected override void OnDestroy()
+    protected virtual void OnEnable()
     {
-        base.OnDestroy();
-        UpdateView.OnUpdate -= DoUpdate;
+        UpdateView.AddUpdater(this);
+    }
+
+    protected virtual void OnDisable()
+    {
+        UpdateView.RemoveUpdater(this);
     }
 
     public override void OnSpawn()
@@ -37,7 +40,7 @@ public class SpriteHolder : PooledBehaviour
         Do();
     }
 
-    protected virtual void DoUpdate()
+    public virtual void DoUpdate()
     {
         if (!EveryFrame)
             return;
@@ -46,17 +49,12 @@ public class SpriteHolder : PooledBehaviour
 
     private void Do()
     {
-        for (int i = 0; i < Sprites.Length; i++)
-        {
-            if (Sprites[i] != null)
-                Sprites[i].sortingOrder = (int)(Bottom.position.y * -50f) + i;
-        }
         DoShader();
     }
 
     public void DoShader()
     {
-        if (Sprites == null || Sprites == null)
+        if (Sprites == null || Sprites.Length == 0)
             return;
         if (block == null)
             block = new MaterialPropertyBlock();
@@ -64,6 +62,7 @@ public class SpriteHolder : PooledBehaviour
         {
             if (Sprites[i] == null)
                 continue;
+            Sprites[i].sortingOrder = (int)(Bottom.position.y * -50f) + i;
             if (block != null) block.Clear();
 
             Sprites[i].GetPropertyBlock(block);

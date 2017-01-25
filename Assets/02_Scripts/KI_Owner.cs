@@ -179,7 +179,7 @@ public class KI_Owner : Owner
         }
     }
 
-    protected override void DoUpdate()
+    public override void DoUpdate()
     {
         if (State == States.IDLE)
             WantedSpeed = 0.1f;

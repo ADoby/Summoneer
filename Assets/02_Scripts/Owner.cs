@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Owner : SimpleMVCSBehaviour
+public class Owner : SpriteHolder
 {
     public enum Types
     {
@@ -47,16 +47,6 @@ public class Owner : SimpleMVCSBehaviour
     protected override void Start()
     {
         GameManager.Instance.RegisterOwner(this);
-        UpdateView.OnUpdate += DoUpdate;
-    }
-
-    protected override void Awake()
-    {
-    }
-
-    protected override void OnDestroy()
-    {
-        UpdateView.OnUpdate -= DoUpdate;
     }
 
     public virtual void ReleaseMinion(Minion minion)
@@ -120,8 +110,9 @@ public class Owner : SimpleMVCSBehaviour
         return transform.position;
     }
 
-    protected virtual void DoUpdate()
+    public override void DoUpdate()
     {
+        base.DoUpdate();
         SetMinionTarget();
         MinionVelocity = Vector2.zero;
         MinionCenter = Vector3.zero;
